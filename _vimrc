@@ -34,12 +34,22 @@ set noincsearch "検索文字列入力時に順次対象文字列にヒットさ
 set nohlsearch "検索結果文字列の非ハイライト表示
 
 set nocompatible
-filetype off
 
-set rtp+=~/dotfiles/vimfiles/vundle.git/
-call vundle#rc()
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/unite.vim'
-Bundle 'thinca/vim-ref'
-Bundle 'thinca/vim-quickrun'
-filetype plugin indent on
+if has('vim_starting')
+      set runtimepath+=~/.vim/bundle/neobundle.vim/
+  endif
+
+  call neobundle#rc(expand('~/.vim/bundle/'))
+
+  NeoBundleFetch 'Shougo/neobundle.vim'
+
+  NeoBundle 'Shougo/vimproc', {
+        \ 'build' : {
+        \     'windows' : 'make -f make_mingw32.mak',
+        \     'cygwin' : 'make -f make_cygwin.mak',
+        \     'mac' : 'make -f make_mac.mak',
+        \     'unix' : 'make -f make_unix.mak',
+        \    },
+        \ }
+
+  NeoBundleCheck
