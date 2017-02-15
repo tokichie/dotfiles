@@ -95,6 +95,7 @@ alias -g B='"$(git_current_branch_name)"'
 alias pushB='git push origin B'
 
 alias vi='vim'
+unalias rm
 
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
