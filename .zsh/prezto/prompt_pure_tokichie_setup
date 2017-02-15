@@ -210,10 +210,10 @@ prompt_pure_precmd() {
 
 	# Get ruby info
  	ruby-info
-	RPROMPT=' %F{5}${ruby_info[version]}%f'
+	RPROMPT=' %F{magenta}${ruby_info[version]}%f'
 
-  node-info
-  RPROMPT+=' %F{123}${node_info[version]}%f'
+	node-info
+	RPROMPT+=' %F{blue}${node_info[version]}%f'
 
 	# get vcs info
 	vcs_info
@@ -342,7 +342,7 @@ prompt_pure_tokichie_setup() {
 	zstyle ':vcs_info:git*' actionformats ' %b|%a' 'x%R'
 
 	zstyle ':prezto:module:ruby:info:version' format ' %v'
-  zstyle ':prezto:module:node:info:version' format ' %v'
+	zstyle ':prezto:module:node:info:version' format ' %v'
 
 	# if the user has not registered a custom zle widget for clear-screen,
 	# override the builtin one so that the preprompt is displayed correctly when
