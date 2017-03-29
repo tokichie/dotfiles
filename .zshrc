@@ -7,6 +7,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 bindkey -e
+export GOPATH=$HOME/.go
 
 # zsh plugins
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -18,9 +19,6 @@ zplug "junegunn/dotfiles", as:command, use:bin/vimcat
 # tcnksm/docker-alias にある zshrc をプラグインとして管理する
 # as: のデフォルトは plugin なので省力もできる
 zplug "tcnksm/docker-alias", use:zshrc, as:plugin
-
-# frozen: を指定すると全体アップデートのときアップデートしなくなる（デフォルトは0）
-zplug "k4rthik/git-cal", as:command, frozen:1
 
 # from: で特殊ケースを扱える
 # gh-r を指定すると GitHub Releases から取ってくる
@@ -45,25 +43,21 @@ zplug "tj/n", hook-build:"make install"
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "mollifier/anyframe", at:4c23cb60
 
-# from: では gist を指定することができる
-# gist のときもリポジトリと同様にタグを使うことができる
-zplug "b4b4r07/79ee61f7c140c63d2786", \
-    from:gist, \
-    as:command, \
-    use:get_last_pane_path.sh
-
-# パイプで依存関係を表現できる
-# 依存関係はパイプの流れのまま
-# この例では emoji-cli は jq に依存する
-zplug "stedolan/jq", \
-    as:command, \
-    rename-to:jq, \
-    from:gh-r
-
 # zplug "mafredri/zsh-async", on:sindresorhus/pure
 # zplug "sindresorhus/pure", use:pure.zsh
 
 zplug "zsh-users/zsh-autosuggestions", use:zsh-autosuggestions.zsh
+
+# zsh-history
+# export ZSH_HISTORY_FILE="$HOME/.zsh/zsh_history.db"
+# export ZSH_HISTORY_BACKUP_DIR="$HOME/.zsh/history/backup"
+# export ZSH_HISTORY_FILTER="fzf"
+# export ZSH_HISTORY_KEYBIND_GET_BY_DIR="^r"
+# export ZSH_HISTORY_KEYBIND_GET_ALL="^r^a"
+# export ZSH_HISTORY_KEYBIND_SCREEN="^r^r"
+# export ZSH_HISTORY_KEYBIND_ARROW_UP="^p"
+# export ZSH_HISTORY_KEYBIND_ARROW_DOWN="^n"
+# source $HOME/lib/zsh-history/init.zsh
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
 # false のとき（つまり未インストール項目がある）y/N プロンプトで
@@ -94,6 +88,21 @@ bindkey '^R' peco-history-selection
 # プラグインを読み込み、コマンドにパスを通す
 zplug load --verbose
 
+#
+# History
+#
+export HISTFILE=${HOME}/.zsh_history
+export HISTSIZE=1000
+export SAVEHIST=1000000
+setopt hist_ignore_dups
+setopt EXTENDED_HISTORY
+bindkey -v
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^S' history-incremental-pattern-search-forward
+
+#
+# Aliases
+#
 alias t='tig'
 alias st='tig status'
 alias p='git pull origin'
@@ -119,9 +128,18 @@ export PATH="$ANDROID_HOME/platform-tools:$PATH"
 
 eval "$(rbenv init -)"
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+    . "$NVM_DIR/nvm.sh"
+elif [[ -s /usr/local/opt/nvm/nvm.sh ]]; then
+    . "/usr/local/opt/nvm/nvm.sh"
+fi
+
+ssh-add > /dev/null
 
 clear
+
+if (which zprof > /dev/null 2>&1); then
+    zprof
+fi
+
