@@ -76,14 +76,14 @@ export SAVEHIST=1000000
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
-function peco-history-selection() {
-  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco`
+function fzf-history-selection() {
+  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | fzf`
   CURSOR=$#BUFFER
   zle reset-prompt
 }
 
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
+zle -N fzf-history-selection
+bindkey '^R' fzf-history-selection
 
 # プラグインを読み込み、コマンドにパスを通す
 zplug load --verbose
