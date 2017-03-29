@@ -96,9 +96,6 @@ export HISTSIZE=1000
 export SAVEHIST=1000000
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
-bindkey -v
-bindkey '^R' history-incremental-pattern-search-backward
-bindkey '^S' history-incremental-pattern-search-forward
 
 #
 # Aliases
