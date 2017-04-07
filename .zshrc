@@ -98,6 +98,20 @@ setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
 #
+# Functions
+#
+function git-checkout-local() {
+  if [ -n "$1" ]; then
+    git checkout "$1"
+  else
+    local branches branch
+    branches=$(git branch -vv) &&
+    branch=$(echo "$branches" | fzf +m) &&
+    git checkout $(echo "$branch" | awk '$0=$1' | sed "s/.* //")
+  fi
+}
+
+#
 # Aliases
 #
 alias t='tig'
@@ -105,7 +119,7 @@ alias st='tig status'
 alias p='git pull origin'
 alias gl='git log --decorate'
 alias glo='git log --oneline'
-alias c='git checkout'
+alias c='git-checkout-local'
 alias cb='git checkout -b'
 alias b='git branch'
 alias f='git fetch --prune'
