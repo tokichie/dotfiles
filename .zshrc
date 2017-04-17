@@ -77,7 +77,7 @@ setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
 function fzf-history-selection() {
-  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | fzf`
+  BUFFER=`history -n 1 | awk '!a[$0]++' | fzf`
   CURSOR=$#BUFFER
   zle reset-prompt
 }
