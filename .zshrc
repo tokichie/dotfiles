@@ -130,7 +130,8 @@ function git_current_branch_name()
 }
 alias -g B='"$(git_current_branch_name)"'
 
-alias pushB='git push origin B'
+alias pB='git push origin B'
+alias pushB=pB
 
 alias vi='vim'
 
