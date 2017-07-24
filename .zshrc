@@ -77,7 +77,7 @@ setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
 function fzf-history-selection() {
-  BUFFER=`history -n 1 | awk '!a[$0]++' | fzf`
+  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | fzf`
   CURSOR=$#BUFFER
   zle reset-prompt
 }
@@ -100,14 +100,14 @@ setopt EXTENDED_HISTORY
 #
 # Functions
 #
-function git-checkout-local() {
+function git-checkout() {
   if [ -n "$1" ]; then
     git checkout "$1"
   else
     local branches branch
-    branches=$(git branch -vv) &&
+    branches=$(git branch -avv | grep -v HEAD) &&
     branch=$(echo "$branches" | fzf +m) &&
-    git checkout $(echo "$branch" | awk '$0=$1' | sed "s/.* //")
+    git checkout $(echo "$branch" | awk '$0=$1' | sed "s/.* //" | sed "s/remotes\/origin\///g")
   fi
 }
 
@@ -119,7 +119,7 @@ alias st='tig status'
 alias p='git pull origin'
 alias gl='git log --decorate'
 alias glo='git log --oneline'
-alias c='git-checkout-local'
+alias c='git-checkout'
 alias cb='git checkout -b'
 alias b='git branch'
 alias f='git fetch --prune'
