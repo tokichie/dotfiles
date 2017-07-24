@@ -77,7 +77,7 @@ setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
 function fzf-history-selection() {
-  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | fzf`
+  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | fzf +s`
   CURSOR=$#BUFFER
   zle reset-prompt
 }
@@ -111,6 +111,13 @@ function git-checkout() {
   fi
 }
 
+function git-checkout-tag() {
+  local tags tag
+  tags=$(git tag | sort -r) &&
+  tag=$(echo "$tags" | fzf +m) &&
+  git checkout $tag
+}
+
 #
 # Aliases
 #
@@ -120,6 +127,7 @@ alias p='git pull origin'
 alias gl='git log --decorate'
 alias glo='git log --oneline'
 alias c='git-checkout'
+alias ct='git-checkout-tag'
 alias cb='git checkout -b'
 alias b='git branch'
 alias f='git fetch --prune'
@@ -128,7 +136,7 @@ function git_current_branch_name()
 {
   git branch | grep '^\*' | sed 's/^\* *//'
 }
-alias -g B='"$(git_current_branch_name)"'
+alias -g B='$(git_current_branch_name)'
 
 alias pB='git push origin B'
 alias pushB=pB
@@ -136,7 +144,7 @@ alias pushB=pB
 alias vi='vim'
 
 export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$GOPATH/bin:$ANDROID_HOME/platform-tools:$PATH"
 
 eval "$(rbenv init -)"
 
