@@ -7,7 +7,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 bindkey -e
-export GOPATH=$HOME/.go
+# export GOPATH=$HOME/.go
 
 # zsh plugins
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -23,7 +23,6 @@ zplug "tcnksm/docker-alias", use:zshrc, as:plugin
 # from: で特殊ケースを扱える
 # gh-r を指定すると GitHub Releases から取ってくる
 # use: で amd64 とかするとそれを持ってくる（指定しないかぎりOSにあったものを自動で選ぶ）
-# コマンド化するときに rename-to: でリネームできる（この例では fzf-bin を fzf にしてる）
 zplug "junegunn/fzf-bin", \
     as:command, \
     from:gh-r, \
@@ -43,31 +42,28 @@ zplug "tj/n", hook-build:"make install"
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "mollifier/anyframe", at:4c23cb60
 
+# パイプで依存関係を表現できる
+# 依存関係はパイプの流れのまま
+# この例では emoji-cli は jq に依存する
+zplug "stedolan/jq", \
+    as:command, \
+    rename-to:jq, \
+    from:gh-r
+
 # zplug "mafredri/zsh-async", on:sindresorhus/pure
 # zplug "sindresorhus/pure", use:pure.zsh
 
 zplug "zsh-users/zsh-autosuggestions", use:zsh-autosuggestions.zsh
 
-# zsh-history
-# export ZSH_HISTORY_FILE="$HOME/.zsh/zsh_history.db"
-# export ZSH_HISTORY_BACKUP_DIR="$HOME/.zsh/history/backup"
-# export ZSH_HISTORY_FILTER="fzf"
-# export ZSH_HISTORY_KEYBIND_GET_BY_DIR="^r"
-# export ZSH_HISTORY_KEYBIND_GET_ALL="^r^a"
-# export ZSH_HISTORY_KEYBIND_SCREEN="^r^r"
-# export ZSH_HISTORY_KEYBIND_ARROW_UP="^p"
-# export ZSH_HISTORY_KEYBIND_ARROW_DOWN="^n"
-# source $HOME/lib/zsh-history/init.zsh
-
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
 # false のとき（つまり未インストール項目がある）y/N プロンプトで
 # インストールする
-# if ! zplug check --verbose; then
-#     printf "Install? [y/N]: "
-#     if read -q; then
-#         echo; zplug install
-#     fi
-# fi
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
 
 # HISTORY
 export HISTFILE=${HOME}/.zsh_history
@@ -77,7 +73,7 @@ setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
 function fzf-history-selection() {
-  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | fzf +s`
+  BUFFER=`history -n 1 | awk '!a[$0]++' | fzf --tac`
   CURSOR=$#BUFFER
   zle reset-prompt
 }
@@ -89,15 +85,6 @@ bindkey '^R' fzf-history-selection
 zplug load --verbose
 
 #
-# History
-#
-export HISTFILE=${HOME}/.zsh_history
-export HISTSIZE=1000
-export SAVEHIST=1000000
-setopt hist_ignore_dups
-setopt EXTENDED_HISTORY
-
-#
 # Functions
 #
 function git-checkout() {
@@ -107,7 +94,7 @@ function git-checkout() {
     local branches branch
     branches=$(git branch -avv | grep -v HEAD) &&
     branch=$(echo "$branches" | fzf +m) &&
-    git checkout $(echo "$branch" | awk '$0=$1' | sed "s/.* //" | sed "s/remotes\/origin\///g")
+    git checkout $(echo "$branch" | awk '$0=$1' | sed "s/\(remotes\/origin\/\)*//")
   fi
 }
 
@@ -138,8 +125,7 @@ function git_current_branch_name()
 }
 alias -g B='$(git_current_branch_name)'
 
-alias pB='git push origin B'
-alias pushB=pB
+alias pb='git push -u origin B'
 
 alias vi='vim'
 
@@ -163,3 +149,23 @@ if (which zprof > /dev/null 2>&1); then
     zprof
 fi
 
+#
+## User configuration
+#
+
+umask 022
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt extended_history
+setopt NOTIFY
+setopt NOHUP
+setopt MAILWARN
+
+#
+## goenv config
+#
+# export GOENV_ROOT="$HOME/.goenv"
+# export GOPATH="$HOME/go"
+# export PATH="$GOPATH/bin:$GOENV_ROOT/bin:$PATH"
+# export PATH="/Users/tokitake/lib/protoc-3.2.0-osx-x86_64/bin:$PATH"
+# eval "$(goenv init -)"
