@@ -1,1 +1,14 @@
+set wrap-lines = yes
+set status-show-untracked-dirs = yes
+
 bind main C !@bash -c "echo -n %(commit) } | pbcopy"
+
+bind generic F none
+bind generic F !git fetch
+
+bind status + !git commit --amend
+bind status S @git stash
+
+bind refs n @git branch "%(prompt Enter branch name: )" %(remote)
+bind refs R @git rebase -i %(branch)
+bind refs ! ?git branch -D %(branch)
