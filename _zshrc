@@ -84,7 +84,7 @@ function git-checkout() {
     else
         local branches branch
         branches=$(git branch -avv | grep -v HEAD) \
-        && branch=$(echo "$branches" | fzf +m) \
+        && branch=$(echo "$branches" | fzf +s) \
         && git checkout $(echo "$branch" | awk '$0=$1' | sed "s/\(remotes\/origin\/\)*//")
     fi
 }
