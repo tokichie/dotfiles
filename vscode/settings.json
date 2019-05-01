@@ -1,9 +1,0 @@
-// 既定の設定を上書きするには、このファイル内に設定を挿入します
-{
-    "editor.fontFamily": "SFMono-Regular, Menlo, Monaco, 'Courier New', monospace",
-    "editor.lineHeight": 16,
-    "editor.tabSize": 2,
-    "editor.renderWhitespace": "boundary",
-
-    "files.autoGuessEncoding": true
-}
