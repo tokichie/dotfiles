@@ -45,6 +45,7 @@ declare -a ESSENTIALS=(
     "goenv"
     "direnv"
     "nvim"
+    "yarn"
 )
 for cmd in "${ESSENTIALS[@]}"; do
     if cmd_missing $cmd; then brew install $cmd; fi
