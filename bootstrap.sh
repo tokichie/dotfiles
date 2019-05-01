@@ -43,6 +43,7 @@ declare -a ESSENTIALS=(
     "n"
     "rbenv"
     "goenv"
+    "direnv"
     "nvim"
 )
 for cmd in "${ESSENTIALS[@]}"; do
