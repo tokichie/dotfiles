@@ -3,3 +3,7 @@
 [user]
 	email = toki211@gmail.com
 	name = tokichie
+[core]
+	excludesfile = ~/.gitignore_global
+[alias]
+	delete-merged-branches = !git branch --merged | grep -v \\\\* | xargs -I % git branch -d %
