@@ -46,6 +46,7 @@ declare -a ESSENTIALS=(
     "direnv"
     "nvim"
     "yarn"
+    "ffmpeg"
 )
 for cmd in "${ESSENTIALS[@]}"; do
     if cmd_missing $cmd; then brew install $cmd; fi
