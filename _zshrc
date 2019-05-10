@@ -120,6 +120,7 @@ alias pb='git push -u origin B'
 
 alias vi='nvim'
 
+alias ls='ls -GF'
 alias ll='ls -l'
 alias la='ls -al'
 
