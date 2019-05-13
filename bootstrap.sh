@@ -43,6 +43,7 @@ declare -a ESSENTIALS=(
     "n"
     "rbenv"
     "goenv"
+    "pyenv"
     "direnv"
     "nvim"
     "yarn"

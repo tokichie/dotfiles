@@ -142,6 +142,12 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:default' menu select=2
 
 ################################################################################
+## direnv config
+################################################################################
+
+eval "$(direnv hook zsh)"
+
+################################################################################
 ## rbenv config
 ################################################################################
 if cmd-exists "rbenv"; then
@@ -156,6 +162,15 @@ if cmd-exists "goenv"; then
     export GOPATH="$HOME/go"
     export PATH="$GOPATH/bin:$GOENV_ROOT/bin:$PATH"
     eval "$(goenv init -)"
+fi
+
+################################################################################
+## pyenv config
+################################################################################
+if cmd-exists "pyenv"; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
 fi
 
 ################################################################################
