@@ -1,6 +1,8 @@
 fpath=( "$HOME/.zfunctions" $fpath )
 
-ZPLUG_HOME=/usr/local/opt/zplug
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+ZPLUG_HOME=/opt/homebrew/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 bindkey -e
@@ -171,6 +173,15 @@ if cmd-exists "pyenv"; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
+fi
+
+################################################################################
+## n config
+################################################################################
+if cmd-exists "n"; then
+    mkdir -p ~/.n
+    export N_PREFIX="$HOME/.n"
+    export PATH="$HOME/.n/bin:$PATH"
 fi
 
 ################################################################################

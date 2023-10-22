@@ -1,7 +1,7 @@
 [ghq]
 	root = ~/ghq
 [user]
-	email = toki211@gmail.com
+	email = 3077613+tokichie@users.noreply.github.com
 	name = tokichie
 [core]
 	excludesfile = ~/.gitignore_global

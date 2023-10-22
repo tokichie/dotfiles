@@ -28,7 +28,8 @@ realpath () {
 ##  1. install homebrew
 ###
 if cmd_missing "brew"; then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 ###
@@ -56,16 +57,16 @@ done
 ###
 ##  3. setup zplug
 ###
-ZPLUG_HOME=/usr/local/opt/zplug
-if [ ! -d $ZPLUG_HOME]; then
+ZPLUG_HOME=/opt/homebrew/opt/zplug
+if [ ! -d $ZPLUG_HOME ]; then
     brew install zplug
 fi
 
 mkdir -p $HOME/.zfunctions
-if [ ! -f $HOME/.zfunctions/async ]; then
+if [ ! -f $HOME/.zfunctions/async ] && [ -f $ZPLUG_HOME/repos/sindresorhus/pure/async.zsh ]; then
     ln -s $ZPLUG_HOME/repos/sindresorhus/pure/async.zsh $HOME/.zfunctions/async
 fi
-if [ ! -f $HOME/.zfunctions/prompt_pure_setup ]; then
+if [ ! -f $HOME/.zfunctions/prompt_pure_setup ] && [ -f $ZPLUG_HOME/repos/sindresorhus/pure/pure.zsh ]; then
     ln -s $ZPLUG_HOME/repos/sindresorhus/pure/pure.zsh $HOME/.zfunctions/prompt_pure_setup
 fi
 
@@ -81,3 +82,8 @@ for FILE in $(ls $DOTFILES_DIR/_*); do
     fi
 done
 
+###
+##  5. install nerd font
+###
+brew tap epk/epk
+brew install --cask font-sf-mono-nerd-font
