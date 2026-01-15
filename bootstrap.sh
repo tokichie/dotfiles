@@ -260,6 +260,40 @@ set_default_shell() {
 }
 
 ################################################################################
+# Phase 7: Configure macOS Defaults
+################################################################################
+
+configure_macos() {
+    log_info "Configuring macOS system preferences..."
+
+    # Keyboard settings
+    log_info "Setting keyboard repeat rate..."
+    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain InitialKeyRepeat -int 15
+    log_success "Keyboard settings configured"
+
+    # Trackpad settings
+    log_info "Setting trackpad scroll direction..."
+    defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+    log_success "Trackpad settings configured"
+
+    # Dock settings
+    log_info "Configuring Dock..."
+    defaults write com.apple.dock tilesize -int 64
+    killall Dock
+    log_success "Dock settings configured"
+
+    # Screenshot settings
+    log_info "Configuring screenshot location..."
+    mkdir -p "$HOME/Pictures/ScreenShots"
+    defaults write com.apple.screencapture location "$HOME/Pictures/ScreenShots"
+    killall SystemUIServer
+    log_success "Screenshot settings configured"
+
+    log_warning "Some settings require logging out and back in to take full effect"
+}
+
+################################################################################
 # Main
 ################################################################################
 
@@ -285,6 +319,9 @@ main() {
     set_default_shell
     set -e
 
+    # Configure macOS defaults
+    configure_macos
+
     echo ""
     echo "========================================="
     log_success "Bootstrap completed!"
@@ -292,8 +329,9 @@ main() {
     echo ""
     echo "Next steps:"
     echo "  1. Restart your terminal (or run 'exec zsh')"
-    echo "  2. Verify installation with: mise doctor"
-    echo "  3. (Optional) Clean up old version managers:"
+    echo "  2. Log out and log back in for all macOS settings to take effect"
+    echo "  3. Verify installation with: mise doctor"
+    echo "  4. (Optional) Clean up old version managers:"
     echo "     rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n"
     echo ""
 }
