@@ -6,8 +6,6 @@ tap "metalbear-co/mirrord"
 tap "supabase/tap"
 
 # Core tools
-brew "claude-code"
-brew "codex"
 brew "direnv"
 brew "displayplacer"
 brew "fzf"

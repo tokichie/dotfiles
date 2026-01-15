@@ -54,13 +54,16 @@ exec zsh
 
 ### CLI Tools
 - **Core**: zsh, git, gh, ghq, fzf, jq, yq, tree, direnv, neovim, tmux, zoxide
-- **AI**: claude-code, codex
 - **Version Managers**: mise (replaces rbenv/goenv/pyenv/n)
 - **Git**: lazygit, jj (Jujutsu), git-delta
 - **Media**: ffmpeg, imagemagick
-- **Cloud/Infra**: terraform, tflint, tenv, azure-cli, cloudflared, supabase, gcloud, kubectl, cue
+- **Cloud/Infra**: terraform, tflint, azure-cli, cloudflared, supabase, gcloud, kubectl, cue
 - **Database**: pgcli, libpq
-- **API**: buf, grpcurl
+- **Protocol/API**: buf, grpcurl
+
+### AI Tools (installed separately)
+- **claude-code**: Installed via `curl -fsSL https://claude.ai/install.sh | bash`
+- **codex**: Installed via `npm i -g @openai/codex`
 
 ### GUI Apps
 - **Development**: Visual Studio Code, Cursor, Ghostty

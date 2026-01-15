@@ -26,9 +26,10 @@ cd ~/.dotfiles
 3. dotfilesのシンボリックリンクを作成（`_*` → `~/.*`、`config/*` → `~/.config/*`）
 4. sheldonプラグインをインストール
 5. miseでバージョン管理ツールをインストール（Node/Python/Ruby/Go）
-6. Google Cloud SDKをインストール
-7. zshをデフォルトシェルに設定
-8. macOSシステム設定を構成（ディスプレイ、キーボード、トラックパッド、Dock、スクリーンショット）
+6. AIツールをインストール（claude-code、codex）
+7. Google Cloud SDKをインストール
+8. zshをデフォルトシェルに設定
+9. macOSシステム設定を構成（ディスプレイ、キーボード、トラックパッド、Dock、スクリーンショット）
 
 **注**: キーボードリマッピング（Caps Lock → Control）はシステム設定のModifier Keysで手動設定が必要です（README.md参照）。
 
@@ -97,12 +98,14 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 ### Brewfile
 `brew bundle`で使用される宣言的な依存関係定義。以下を含む:
 - CLI ツール: zsh, git, gh, ghq, fzf, jq, yq, direnv, neovim, tmux, zoxide, etc.
-- AI ツール: claude-code, codex
 - 開発ツール: mise, sheldon, lazygit, jj, git-delta
 - メディア: ffmpeg, imagemagick
-- クラウド/インフラ: terraform, tflint, tenv, azure-cli, cloudflared, supabase, gcloud, kubectl, cue
+- クラウド/インフラ: terraform, tflint, azure-cli, cloudflared, supabase, kubectl, cue
 - データベース: pgcli, libpq
+- プロトコル/API: buf, grpcurl
 - GUI アプリ: VS Code, Cursor, Ghostty, Raycast, Obsidian, Bitwarden, Google Japanese IME, OrbStack, etc.
+
+**注**: AIツール（claude-code、codex）はbrewではなく、bootstrap.shで個別にインストールされます。
 
 ### _zshrc
 zshの設定ファイル。以下の機能を含む:

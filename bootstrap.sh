@@ -218,7 +218,44 @@ initialize_mise() {
 }
 
 ################################################################################
-# Phase 6: Install Google Cloud SDK
+# Phase 6: Install AI Tools
+################################################################################
+
+install_ai_tools() {
+    log_info "Installing AI tools..."
+
+    # Install claude-code
+    if command -v claude &> /dev/null; then
+        log_success "claude-code already installed"
+    else
+        log_info "Installing claude-code..."
+        if curl -fsSL https://claude.ai/install.sh | bash; then
+            log_success "claude-code installed"
+        else
+            log_warning "Failed to install claude-code. You may need to install it manually:"
+            log_warning "  curl -fsSL https://claude.ai/install.sh | bash"
+        fi
+    fi
+
+    # Install codex (requires Node.js from mise)
+    if command -v codex &> /dev/null; then
+        log_success "codex already installed"
+    else
+        log_info "Installing codex via npm..."
+        # Ensure mise is activated in current shell
+        eval "$(mise activate bash)" 2>/dev/null || true
+
+        if npm i -g @openai/codex 2>/dev/null; then
+            log_success "codex installed"
+        else
+            log_warning "Failed to install codex. You may need to install it manually:"
+            log_warning "  npm i -g @openai/codex"
+        fi
+    fi
+}
+
+################################################################################
+# Phase 7: Install Google Cloud SDK
 ################################################################################
 
 install_google_cloud_sdk() {
@@ -237,7 +274,7 @@ install_google_cloud_sdk() {
 }
 
 ################################################################################
-# Phase 7: Set Zsh as Default Shell
+# Phase 8: Set Zsh as Default Shell
 ################################################################################
 
 set_default_shell() {
@@ -286,7 +323,7 @@ set_default_shell() {
 }
 
 ################################################################################
-# Phase 8: Configure macOS Defaults
+# Phase 9: Configure macOS Defaults
 ################################################################################
 
 set_max_scaled_resolution() {
@@ -499,6 +536,7 @@ main() {
     create_symlinks
     initialize_sheldon
     initialize_mise
+    install_ai_tools
     install_google_cloud_sdk
 
     # Set default shell (may require sudo, handle failure gracefully)
