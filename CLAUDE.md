@@ -94,7 +94,8 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 
 ### Brewfile
 `brew bundle`で使用される宣言的な依存関係定義。以下を含む:
-- CLI ツール: zsh, git, gh, ghq, fzf, jq, yq, direnv, neovim, tmux, etc.
+- CLI ツール: zsh, git, gh, ghq, fzf, jq, yq, direnv, neovim, tmux, zoxide, etc.
+- AI ツール: claude-code, codex
 - 開発ツール: mise, sheldon, lazygit, jj, git-delta
 - メディア: ffmpeg, imagemagick
 - クラウド/インフラ: terraform, tflint, tenv, azure-cli, cloudflared, supabase, gcloud, kubectl, cue
@@ -106,11 +107,16 @@ zshの設定ファイル。以下の機能を含む:
 
 **プラグイン管理（sheldon）:**
 - `eval "$(sheldon source)"` - sheldonでプラグインをロード
-- syntax-highlighting, history-substring-search, autosuggestions, enhancd, pure
+- syntax-highlighting, history-substring-search, autosuggestions, pure
 
 **バージョンマネージャー（mise）:**
 - `eval "$(mise activate zsh)"` - miseを有効化
 - Node/Python/Ruby/Goを一元管理
+
+**ディレクトリ移動（zoxide）:**
+- `eval "$(zoxide init zsh)"` - zoxideを有効化
+- `z`コマンドでスマートにディレクトリ移動（履歴ベース）
+- `zi`でインタラクティブ選択
 
 **プロンプトカスタマイズ:**
 - プロジェクト内で言語バージョンを左プロンプトに表示

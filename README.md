@@ -53,7 +53,8 @@ exec zsh
 ## What Gets Installed
 
 ### CLI Tools
-- **Core**: zsh, git, gh, ghq, fzf, jq, yq, tree, direnv, neovim, tmux
+- **Core**: zsh, git, gh, ghq, fzf, jq, yq, tree, direnv, neovim, tmux, zoxide
+- **AI**: claude-code, codex
 - **Version Managers**: mise (replaces rbenv/goenv/pyenv/n)
 - **Git**: lazygit, jj (Jujutsu), git-delta
 - **Media**: ffmpeg, imagemagick
