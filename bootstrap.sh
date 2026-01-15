@@ -117,7 +117,7 @@ install_dependencies() {
         exit 1
     fi
 
-    brew bundle --file="$(pwd)/Brewfile" --no-lock
+    brew bundle --file="$(pwd)/Brewfile"
 
     log_success "Dependencies installed"
 }
