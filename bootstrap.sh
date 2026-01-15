@@ -348,6 +348,101 @@ configure_macos() {
 
     log_success "Keyboard settings configured"
 
+    # Keyboard shortcuts
+    log_info "Configuring keyboard shortcuts..."
+
+    # Disable Spotlight shortcuts (Cmd+Space, Cmd+Option+Space)
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "<dict><key>enabled</key><false/></dict>"
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "<dict><key>enabled</key><false/></dict>"
+
+    # Enable Desktop switching with Ctrl+1-5
+    # Desktop 1: Ctrl+1 (keycode 18)
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 118 "
+      <dict>
+        <key>enabled</key><true/>
+        <key>value</key><dict>
+          <key>type</key><string>standard</string>
+          <key>parameters</key>
+          <array>
+            <integer>65535</integer>
+            <integer>18</integer>
+            <integer>262144</integer>
+          </array>
+        </dict>
+      </dict>
+    "
+
+    # Desktop 2: Ctrl+2 (keycode 19)
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 119 "
+      <dict>
+        <key>enabled</key><true/>
+        <key>value</key><dict>
+          <key>type</key><string>standard</string>
+          <key>parameters</key>
+          <array>
+            <integer>65535</integer>
+            <integer>19</integer>
+            <integer>262144</integer>
+          </array>
+        </dict>
+      </dict>
+    "
+
+    # Desktop 3: Ctrl+3 (keycode 20)
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 120 "
+      <dict>
+        <key>enabled</key><true/>
+        <key>value</key><dict>
+          <key>type</key><string>standard</string>
+          <key>parameters</key>
+          <array>
+            <integer>65535</integer>
+            <integer>20</integer>
+            <integer>262144</integer>
+          </array>
+        </dict>
+      </dict>
+    "
+
+    # Desktop 4: Ctrl+4 (keycode 21)
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 121 "
+      <dict>
+        <key>enabled</key><true/>
+        <key>value</key><dict>
+          <key>type</key><string>standard</string>
+          <key>parameters</key>
+          <array>
+            <integer>65535</integer>
+            <integer>21</integer>
+            <integer>262144</integer>
+          </array>
+        </dict>
+      </dict>
+    "
+
+    # Desktop 5: Ctrl+5 (keycode 23)
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 122 "
+      <dict>
+        <key>enabled</key><true/>
+        <key>value</key><dict>
+          <key>type</key><string>standard</string>
+          <key>parameters</key>
+          <array>
+            <integer>65535</integer>
+            <integer>23</integer>
+            <integer>262144</integer>
+          </array>
+        </dict>
+      </dict>
+    "
+
+    # Disable unused Mission Control shortcuts
+    for id in 15 16 17 18 19 20 21 22 23 24 25 26 34; do
+        defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add $id "<dict><key>enabled</key><false/></dict>"
+    done
+
+    log_success "Keyboard shortcuts configured"
+
     # Trackpad settings
     log_info "Configuring trackpad settings..."
 
@@ -381,7 +476,7 @@ configure_macos() {
     killall SystemUIServer
     log_success "Screenshot settings configured"
 
-    log_warning "Trackpad and keyboard settings require logging out and back in to take full effect"
+    log_warning "Trackpad, keyboard, and keyboard shortcut settings require logging out and back in to take full effect"
 }
 
 ################################################################################

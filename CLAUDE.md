@@ -192,6 +192,11 @@ bootstrap.shは以下のmacOSシステム設定を自動構成します：
   - Caps Lock → Control
   - Left Control → Escape
 
+### Keyboard Shortcuts
+- **Spotlight**: 無効化（Cmd+Space, Cmd+Option+Space）- Raycast使用のため
+- **Mission Control - Desktop切り替え**: Ctrl+1〜5で5つのデスクトップを切り替え
+- **Mission Control - その他**: 不要なショートカット（Show Notification Center, Application Windows等）を無効化
+
 ### Trackpad
 - **スクロール方向**: ナチュラルスクロールを無効化（従来のスクロール方向）
 - **トラッキング速度**: 3（システム環境設定の「速い」と「遅い」の中間より速め）

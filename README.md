@@ -73,6 +73,7 @@ exec zsh
 - **Display**: Maximum scaled resolution
 - **Keyboard**: Fastest key repeat, function keys as standard F1-F12
 - **Keyboard Remapping**: Caps Lock → Control, Left Control → Escape (via LaunchAgent)
+- **Keyboard Shortcuts**: Spotlight disabled, Desktop switching (Ctrl+1-5), unused Mission Control shortcuts disabled
 - **Trackpad**: Traditional scroll direction, tracking speed 3, tap to click enabled
 - **Dock**: 45px tile size
 - **Screenshots**: Saved to `~/Pictures/ScreenShots/`
