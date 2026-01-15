@@ -67,6 +67,7 @@ exec zsh
 - **Security**: Bitwarden
 - **Database**: DBeaver Community
 - **AI**: ChatGPT
+- **Input Method**: Google Japanese IME
 - **Utilities**: Karabiner Elements
 
 ### macOS System Settings
