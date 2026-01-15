@@ -110,6 +110,20 @@ cd ~/ghq/github.com/example/project
 # Node/Go versions should appear in left prompt
 ```
 
+### Import Raycast Configuration
+
+Raycast settings can be imported manually:
+
+```bash
+# 1. Open Raycast Settings (Cmd+,)
+# 2. Go to Advanced tab
+# 3. Click "Import Configuration"
+# 4. Select ~/.dotfiles/raycast/raycast.rayconfig
+# 5. Enter password to import
+```
+
+See `raycast/README.md` for details.
+
 ### Clean Up Legacy Version Managers
 
 After confirming mise is working correctly, you can remove old version managers:
@@ -129,6 +143,9 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 ├── _gitconfig                # Git configuration
 ├── LaunchAgents/
 │   └── com.user.keyremapping.plist  # Keyboard remapping
+├── raycast/
+│   ├── README.md             # Raycast import instructions
+│   └── raycast.rayconfig     # Raycast settings (password-protected)
 └── config/
     ├── sheldon/
     │   └── plugins.toml      # Zsh plugins

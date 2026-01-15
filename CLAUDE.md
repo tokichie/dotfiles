@@ -70,6 +70,9 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 ├── CLAUDE.md                 # このファイル
 ├── LaunchAgents/
 │   └── com.user.keyremapping.plist  # キーボードリマッピング設定
+├── raycast/
+│   ├── README.md             # Raycastインポート手順
+│   └── raycast.rayconfig     # Raycast設定（パスワード保護）
 └── config/
     ├── sheldon/
     │   └── plugins.toml      # zshプラグイン定義
@@ -176,6 +179,24 @@ launchctl load ~/Library/LaunchAgents/com.user.keyremapping.plist
 # 現在のキーマッピングを確認
 hidutil property --get "UserKeyMapping"
 ```
+
+### raycast/raycast.rayconfig
+Raycastのエクスポートした設定ファイル（パスワード保護）。
+
+**インポート手順:**
+1. Raycastを起動してSettings (Cmd+,) を開く
+2. Advancedタブを選択
+3. Import Configurationをクリック
+4. `~/.dotfiles/raycast/raycast.rayconfig`を選択
+5. パスワードを入力してインポート
+
+**更新手順:**
+1. RaycastでExport Configurationを実行
+2. パスワードを設定してエクスポート
+3. エクスポートファイルを`raycast.rayconfig`にリネームして`~/.dotfiles/raycast/`に配置
+4. 変更をjjでコミット
+
+詳細は`raycast/README.md`を参照。
 
 ## macOS System Settings
 
