@@ -13,8 +13,10 @@ readonly YELLOW='\033[1;33m'
 readonly BLUE='\033[0;34m'
 readonly NC='\033[0m' # No Color
 
-# Get dotfiles directory
-readonly DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Configuration
+readonly DOTFILES_REPO_SSH="git@github.com:tokichie/dotfiles.git"
+readonly DOTFILES_REPO_HTTPS="https://github.com/tokichie/dotfiles.git"
+readonly DOTFILES_TARGET="$HOME/.dotfiles"
 
 ################################################################################
 # Logging functions
@@ -34,6 +36,48 @@ log_warning() {
 
 log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
+}
+
+################################################################################
+# Phase 0: Setup Dotfiles Repository
+################################################################################
+
+setup_dotfiles_repo() {
+    # Check if already in the dotfiles directory
+    if [ -f "$(pwd)/Brewfile" ] && [ -f "$(pwd)/_zshrc" ]; then
+        log_info "Running from dotfiles directory"
+        cd "$(pwd)"
+        return 0
+    fi
+
+    # Check if dotfiles already exists
+    if [ -d "$DOTFILES_TARGET" ]; then
+        log_info "Dotfiles directory already exists at $DOTFILES_TARGET"
+        cd "$DOTFILES_TARGET"
+        return 0
+    fi
+
+    # Clone dotfiles repository
+    log_info "Cloning dotfiles repository..."
+
+    if ! command -v git &> /dev/null; then
+        log_error "git is not installed. Please install Xcode Command Line Tools:"
+        log_error "  xcode-select --install"
+        exit 1
+    fi
+
+    # Try SSH first, fallback to HTTPS
+    if git clone "$DOTFILES_REPO_SSH" "$DOTFILES_TARGET" 2>/dev/null; then
+        log_success "Cloned via SSH"
+    elif git clone "$DOTFILES_REPO_HTTPS" "$DOTFILES_TARGET" 2>/dev/null; then
+        log_success "Cloned via HTTPS"
+    else
+        log_error "Failed to clone repository"
+        exit 1
+    fi
+
+    cd "$DOTFILES_TARGET"
+    log_success "Dotfiles repository cloned to $DOTFILES_TARGET"
 }
 
 ################################################################################
@@ -68,12 +112,12 @@ install_homebrew() {
 install_dependencies() {
     log_info "Installing dependencies via Brewfile..."
 
-    if [ ! -f "$DOTFILES_DIR/Brewfile" ]; then
-        log_error "Brewfile not found at $DOTFILES_DIR/Brewfile"
+    if [ ! -f "$(pwd)/Brewfile" ]; then
+        log_error "Brewfile not found at $(pwd)/Brewfile"
         exit 1
     fi
 
-    brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock
+    brew bundle --file="$(pwd)/Brewfile" --no-lock
 
     log_success "Dependencies installed"
 }
@@ -86,7 +130,7 @@ create_symlinks() {
     log_info "Creating symlinks..."
 
     # Symlink dotfiles (_filename -> ~/.filename)
-    for file in "$DOTFILES_DIR"/_*; do
+    for file in "$(pwd)"/_*; do
         [ -f "$file" ] || continue
 
         local basename=$(basename "$file" | sed 's/^_/./')
@@ -108,7 +152,7 @@ create_symlinks() {
     # Symlink config directories
     mkdir -p "$HOME/.config"
 
-    for dir in "$DOTFILES_DIR/config"/*; do
+    for dir in "$(pwd)/config"/*; do
         [ -d "$dir" ] || continue
 
         local dirname=$(basename "$dir")
@@ -229,6 +273,7 @@ main() {
     log_info "You may be prompted for your sudo password when setting the default shell."
     echo ""
 
+    setup_dotfiles_repo
     install_homebrew
     install_dependencies
     create_symlinks

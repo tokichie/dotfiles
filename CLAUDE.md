@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Automated Setup
 ```bash
-# One-liner setup (from GitHub)
+# One-liner setup (from GitHub) - Recommended
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/tokichie/dotfiles/main/bootstrap.sh)"
 
 # Or clone and run locally
@@ -20,6 +20,7 @@ cd ~/.dotfiles
 ```
 
 ### What bootstrap.sh Does
+0. dotfilesリポジトリを`~/.dotfiles`にクローン（未存在時）
 1. Homebrewをインストール（未インストール時）
 2. Brewfileから依存関係をインストール
 3. dotfilesのシンボリックリンクを作成（`_*` → `~/.*`、`config/*` → `~/.config/*`）
@@ -27,7 +28,10 @@ cd ~/.dotfiles
 5. miseでバージョン管理ツールをインストール（Node/Python/Ruby/Go）
 6. zshをデフォルトシェルに設定
 
-**重要**: デフォルトシェルの設定時にsudoパスワードを求められる場合があります。スクリプト全体を`sudo`で実行する必要はありません。必要な箇所でのみ昇格された権限が要求されます。
+**重要**:
+- ワンライナーで実行する場合、git/Xcode Command Line Toolsが必要です
+- デフォルトシェルの設定時にsudoパスワードを求められる場合があります
+- スクリプト全体を`sudo`で実行する必要はありません（必要な箇所でのみsudoを使用）
 
 ### Post-Installation
 ```bash
