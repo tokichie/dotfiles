@@ -180,7 +180,39 @@ create_symlinks() {
 }
 
 ################################################################################
-# Phase 4: Initialize Sheldon
+# Phase 4: Install Ghostty Themes
+################################################################################
+
+install_ghostty_themes() {
+    log_info "Installing Ghostty themes..."
+
+    local themes_dir="$HOME/.config/ghostty/themes"
+
+    # Check if themes already exist
+    if [ -d "$themes_dir" ] && [ -n "$(ls -A "$themes_dir" 2>/dev/null)" ]; then
+        log_success "Ghostty themes already installed"
+        return 0
+    fi
+
+    # Create themes directory
+    mkdir -p "$themes_dir"
+
+    log_info "Downloading Catppuccin themes for Ghostty..."
+
+    # Download Catppuccin themes
+    if curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-latte -o "$themes_dir/catppuccin-latte" && \
+       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-frappe -o "$themes_dir/catppuccin-frappe" && \
+       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-macchiato -o "$themes_dir/catppuccin-macchiato" && \
+       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-mocha -o "$themes_dir/catppuccin-mocha"; then
+        log_success "Ghostty themes installed"
+    else
+        log_warning "Failed to download some themes. You may need to install manually:"
+        log_warning "  https://github.com/catppuccin/ghostty"
+    fi
+}
+
+################################################################################
+# Phase 5: Initialize Sheldon
 ################################################################################
 
 initialize_sheldon() {
@@ -198,7 +230,7 @@ initialize_sheldon() {
 }
 
 ################################################################################
-# Phase 5: Initialize mise
+# Phase 6: Initialize mise
 ################################################################################
 
 initialize_mise() {
@@ -218,7 +250,7 @@ initialize_mise() {
 }
 
 ################################################################################
-# Phase 6: Install AI Tools
+# Phase 7: Install AI Tools
 ################################################################################
 
 install_ai_tools() {
@@ -255,7 +287,7 @@ install_ai_tools() {
 }
 
 ################################################################################
-# Phase 7: Install Google Cloud SDK
+# Phase 8: Install Google Cloud SDK
 ################################################################################
 
 install_google_cloud_sdk() {
@@ -274,7 +306,7 @@ install_google_cloud_sdk() {
 }
 
 ################################################################################
-# Phase 8: Set Zsh as Default Shell
+# Phase 9: Set Zsh as Default Shell
 ################################################################################
 
 set_default_shell() {
@@ -323,7 +355,7 @@ set_default_shell() {
 }
 
 ################################################################################
-# Phase 9: Configure macOS Defaults
+# Phase 10: Configure macOS Defaults
 ################################################################################
 
 set_max_scaled_resolution() {
@@ -534,6 +566,7 @@ main() {
     install_homebrew
     install_dependencies
     create_symlinks
+    install_ghostty_themes
     initialize_sheldon
     initialize_mise
     install_ai_tools

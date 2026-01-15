@@ -24,12 +24,13 @@ cd ~/.dotfiles
 1. Homebrewをインストール（未インストール時）
 2. Brewfileから依存関係をインストール
 3. dotfilesのシンボリックリンクを作成（`_*` → `~/.*`、`config/*` → `~/.config/*`）
-4. sheldonプラグインをインストール
-5. miseでバージョン管理ツールをインストール（Node/Python/Ruby/Go）
-6. AIツールをインストール（claude-code、codex）
-7. Google Cloud SDKをインストール
-8. zshをデフォルトシェルに設定
-9. macOSシステム設定を構成（ディスプレイ、キーボード、トラックパッド、Dock、スクリーンショット）
+4. Ghosttyテーマをインストール（Catppuccin全4種）
+5. sheldonプラグインをインストール
+6. miseでバージョン管理ツールをインストール（Node/Python/Ruby/Go）
+7. AIツールをインストール（claude-code、codex）
+8. Google Cloud SDKをインストール
+9. zshをデフォルトシェルに設定
+10. macOSシステム設定を構成（ディスプレイ、キーボード、トラックパッド、Dock、スクリーンショット）
 
 **注**: キーボードリマッピング（Caps Lock → Control）はシステム設定のModifier Keysで手動設定が必要です（README.md参照）。
 
@@ -203,7 +204,8 @@ Ghosttyターミナルエミュレータの設定ファイル。`~/.config/ghost
 - `Cmd+Shift+矢印キー`: ペインサイズ調整（20px単位）
 - `Cmd+W`: 現在のペインを閉じる
 
-bootstrap実行時に自動的にシンボリックリンクが作成される。設定を変更した場合、Ghosttyの再起動で反映される。
+**テーマのインストール:**
+bootstrap実行時に、Catppuccinテーマ（latte, frappe, macchiato, mocha）が自動的に`~/.config/ghostty/themes/`にダウンロードされる。設定ファイルはシンボリックリンクとして作成され、設定を変更した場合、Ghosttyの再起動で反映される。
 
 ### raycast/raycast.rayconfig
 Raycastのエクスポートした設定ファイル（パスワード保護）。
