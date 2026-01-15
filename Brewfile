@@ -1,23 +1,23 @@
 # Brewfile - Homebrew dependencies for dotfiles
 
 # Taps
-tap "supabase/tap"
 tap "cue-lang/tap"
 tap "metalbear-co/mirrord"
+tap "supabase/tap"
 
 # Core tools
-brew "zsh"
-brew "git"
+brew "direnv"
+brew "displayplacer"
+brew "fzf"
 brew "gh"
 brew "ghq"
-brew "fzf"
+brew "git"
 brew "jq"
-brew "yq"
-brew "tree"
-brew "direnv"
 brew "neovim"
 brew "tmux"
-brew "displayplacer"
+brew "tree"
+brew "yq"
+brew "zsh"
 
 # Version managers
 brew "mise"
@@ -26,48 +26,47 @@ brew "mise"
 brew "sheldon"
 
 # Git TUI
-brew "lazygit"
-brew "jj"
 brew "git-delta"
+brew "jj"
+brew "lazygit"
 
 # Media tools
 brew "ffmpeg"
 brew "imagemagick"
 
 # Cloud/Infrastructure
-brew "terraform"
-brew "tflint"
 brew "azure-cli"
 brew "cloudflared"
-brew "supabase/tap/supabase"
+brew "cue-lang/tap/cue"
 brew "kubectl"
 brew "metalbear-co/mirrord/mirrord"
-brew "cue-lang/tap/cue"
+brew "supabase/tap/supabase"
+brew "terraform"
+brew "tflint"
 
 # Database
-brew "pgcli"
 brew "libpq"
+brew "pgcli"
 
 # Protocol/API
 brew "buf"
 brew "grpcurl"
 
 # GUI Apps (Casks)
-cask "karabiner-elements"
+cask "antigravity"
+cask "bitwarden"
+cask "chatgpt"
+cask "cursor"
+cask "dbeaver-community"
+cask "ghostty"
 cask "google-japanese-ime"
+cask "karabiner-elements"
+cask "notion"
+cask "obsidian"
 cask "orbstack"
 cask "raycast"
-cask "obsidian"
-cask "dbeaver-community"
-cask "visual-studio-code"
-cask "ghostty"
-cask "bitwarden"
-cask "cursor"
 cask "todoist-app"
-cask "chatgpt"
-cask "notion"
-cask "antigravity"
-
+cask "visual-studio-code"
 
 # Fonts
 cask "font-fira-code-nerd-font"
