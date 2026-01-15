@@ -27,6 +27,8 @@ Modern dotfiles configuration for macOS development environment.
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/tokichie/dotfiles/main/bootstrap.sh)"
 ```
 
+**Note**: You may be prompted for your sudo password when setting the default shell. The script does not require running with `sudo` - it will request elevated privileges only when needed.
+
 ### Manual Setup
 
 ```bash

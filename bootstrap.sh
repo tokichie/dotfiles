@@ -183,14 +183,36 @@ set_default_shell() {
 
     # Add zsh to allowed shells if not present
     if ! grep -q "$zsh_path" /etc/shells; then
-        log_info "Adding $zsh_path to /etc/shells (requires sudo)"
-        echo "$zsh_path" | sudo tee -a /etc/shells > /dev/null
+        log_info "Adding $zsh_path to /etc/shells (requires sudo password)"
+
+        # Temporarily disable exit-on-error for sudo operations
+        set +e
+        echo "$zsh_path" | sudo tee -a /etc/shells > /dev/null 2>&1
+        local sudo_exit_code=$?
+        set -e
+
+        if [ $sudo_exit_code -ne 0 ]; then
+            log_warning "Failed to add $zsh_path to /etc/shells"
+            log_warning "You may need to run this manually:"
+            log_warning "  echo '$zsh_path' | sudo tee -a /etc/shells"
+            return 1
+        fi
     fi
 
-    chsh -s "$zsh_path"
+    # Change default shell
+    set +e
+    chsh -s "$zsh_path" 2>/dev/null
+    local chsh_exit_code=$?
+    set -e
 
-    log_success "Default shell changed to zsh"
-    log_warning "Please restart your terminal for changes to take effect"
+    if [ $chsh_exit_code -eq 0 ]; then
+        log_success "Default shell changed to zsh"
+        log_warning "Please restart your terminal for changes to take effect"
+    else
+        log_warning "Failed to change default shell automatically"
+        log_warning "Please run this command manually:"
+        log_warning "  chsh -s $zsh_path"
+    fi
 }
 
 ################################################################################
@@ -203,17 +225,24 @@ main() {
     echo "  Dotfiles Bootstrap"
     echo "========================================="
     echo ""
+    log_info "This script will set up your development environment."
+    log_info "You may be prompted for your sudo password when setting the default shell."
+    echo ""
 
     install_homebrew
     install_dependencies
     create_symlinks
     initialize_sheldon
     initialize_mise
+
+    # Set default shell (may require sudo, handle failure gracefully)
+    set +e
     set_default_shell
+    set -e
 
     echo ""
     echo "========================================="
-    log_success "Bootstrap completed successfully!"
+    log_success "Bootstrap completed!"
     echo "========================================="
     echo ""
     echo "Next steps:"

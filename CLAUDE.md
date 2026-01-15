@@ -27,6 +27,8 @@ cd ~/.dotfiles
 5. miseでバージョン管理ツールをインストール（Node/Python/Ruby/Go）
 6. zshをデフォルトシェルに設定
 
+**重要**: デフォルトシェルの設定時にsudoパスワードを求められる場合があります。スクリプト全体を`sudo`で実行する必要はありません。必要な箇所でのみ昇格された権限が要求されます。
+
 ### Post-Installation
 ```bash
 # Verify installation
@@ -71,9 +73,10 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 
 ### bootstrap.sh
 - 冪等性: 複数回実行しても安全
-- エラーハンドリング: `set -euo pipefail`で堅牢性確保
+- エラーハンドリング: `set -euo pipefail`で堅牢性確保。sudo失敗時も継続
 - ログ機能: 色付きログで進捗を明示
 - バックアップ機能: 既存ファイルを`.backup`として保存
+- sudo管理: 必要な箇所でのみsudoを使用。失敗時は手動手順を案内
 
 ### Brewfile
 `brew bundle`で使用される宣言的な依存関係定義。以下を含む:
