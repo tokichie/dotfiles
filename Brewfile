@@ -3,6 +3,7 @@
 # Taps
 tap "supabase/tap"
 tap "cue-lang/tap"
+tap "metalbear-co/mirrord"
 
 # Core tools
 brew "zsh"
@@ -39,6 +40,7 @@ brew "azure-cli"
 brew "cloudflared"
 brew "supabase/tap/supabase"
 brew "kubectl"
+brew "metalbear-co/mirrord/mirrord"
 brew "cue-lang/tap/cue"
 
 # Database
