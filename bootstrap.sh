@@ -480,40 +480,6 @@ configure_macos() {
 }
 
 ################################################################################
-# Phase 9: Install LaunchAgents
-################################################################################
-
-install_launchagents() {
-    log_info "Installing LaunchAgents for keyboard remapping..."
-
-    local launchagents_dir="$HOME/Library/LaunchAgents"
-    mkdir -p "$launchagents_dir"
-
-    # Install key remapping LaunchAgent
-    local plist_source="$(pwd)/LaunchAgents/com.user.keyremapping.plist"
-    local plist_target="$launchagents_dir/com.user.keyremapping.plist"
-
-    if [ ! -f "$plist_source" ]; then
-        log_warning "LaunchAgent file not found at $plist_source, skipping"
-        return 0
-    fi
-
-    # Copy (not symlink) the plist file
-    cp "$plist_source" "$plist_target"
-    log_success "Installed key remapping LaunchAgent"
-
-    # Load the LaunchAgent
-    log_info "Loading key remapping service..."
-    launchctl unload "$plist_target" 2>/dev/null || true
-    launchctl load "$plist_target"
-    log_success "Key remapping service loaded"
-
-    log_info "Key mappings:"
-    log_info "  - Caps Lock → Control"
-    log_info "  - Left Control → Escape"
-}
-
-################################################################################
 # Main
 ################################################################################
 
@@ -542,9 +508,6 @@ main() {
 
     # Configure macOS defaults
     configure_macos
-
-    # Install LaunchAgents
-    install_launchagents
 
     echo ""
     echo "========================================="

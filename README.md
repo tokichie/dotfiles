@@ -74,7 +74,7 @@ exec zsh
 ### macOS System Settings
 - **Display**: Maximum scaled resolution
 - **Keyboard**: Fastest key repeat, function keys as standard F1-F12
-- **Keyboard Remapping**: Caps Lock → Control, Left Control → Escape (via LaunchAgent)
+- **Keyboard Remapping**: Caps Lock → Control, Control → Escape (via Karabiner-Elements)
 - **Keyboard Shortcuts**: Spotlight disabled, Desktop switching (Ctrl+1-5), unused Mission Control shortcuts disabled
 - **Trackpad**: Traditional scroll direction, tracking speed 3, tap to click enabled
 - **Dock**: 45px tile size
@@ -142,12 +142,12 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 ├── Brewfile                  # Homebrew dependencies
 ├── _zshrc                    # Zsh configuration
 ├── _gitconfig                # Git configuration
-├── LaunchAgents/
-│   └── com.user.keyremapping.plist  # Keyboard remapping
 ├── raycast/
 │   ├── README.md             # Raycast import instructions
 │   └── raycast.rayconfig     # Raycast settings (password-protected)
 └── config/
+    ├── karabiner/
+    │   └── karabiner.json    # Keyboard remapping
     ├── sheldon/
     │   └── plugins.toml      # Zsh plugins
     ├── lazygit/

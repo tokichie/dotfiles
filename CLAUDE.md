@@ -29,7 +29,8 @@ cd ~/.dotfiles
 6. Google Cloud SDKをインストール
 7. zshをデフォルトシェルに設定
 8. macOSシステム設定を構成（ディスプレイ、キーボード、トラックパッド、Dock、スクリーンショット）
-9. キーボードリマッピング用LaunchAgentをインストール
+
+**注**: キーボードリマッピング（Caps Lock → Control, Control → Escape）はKarabiner-Elementsで管理され、`config/karabiner/`のシンボリックリンクで自動適用されます。
 
 **重要**:
 - ワンライナーで実行する場合、git/Xcode Command Line Toolsが必要です
@@ -68,12 +69,12 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 ├── _gitconfig                # Git設定
 ├── README.md                 # ドキュメント
 ├── CLAUDE.md                 # このファイル
-├── LaunchAgents/
-│   └── com.user.keyremapping.plist  # キーボードリマッピング設定
 ├── raycast/
 │   ├── README.md             # Raycastインポート手順
 │   └── raycast.rayconfig     # Raycast設定（パスワード保護）
 └── config/
+    ├── karabiner/
+    │   └── karabiner.json    # キーボードリマッピング設定
     ├── sheldon/
     │   └── plugins.toml      # zshプラグイン定義
     ├── lazygit/
@@ -161,24 +162,17 @@ lazygitの設定:
 - カスタムエイリアス: `delete-merged-branches` (マージ済みブランチの削除)
 - 自動prune: `fetch.prune = true`
 
-### LaunchAgents/com.user.keyremapping.plist
-システム起動時に自動実行されるキーボードリマッピング設定。`hidutil`を使用して以下のキーを入れ替え:
-- **Caps Lock → Control**: Caps Lockキーを押すとControlキーとして動作
-- **Left Control → Escape**: 左Controlキーを押すとEscapeキーとして動作
+### config/karabiner/karabiner.json
+Karabiner-Elementsのキーボードリマッピング設定。`~/.config/karabiner/`にシンボリックリンクされる。
 
-LaunchAgentは`~/Library/LaunchAgents/`にコピーされ、`launchctl`で自動ロードされます。
+**設定内容:**
+- **Caps Lock → Control**: simple_modificationsで設定
+- **Control → Escape（単独押し時）**: complex_modificationsで設定
+  - Controlキーを他のキーと組み合わせた場合は通常のControl
+  - 単独で押してすぐ離した場合はEscape
+- **Command → 英数/かな**: 左Commandは英数、右Commandはかな（単独押し時）
 
-#### 手動でのキーリマッピング管理
-```bash
-# LaunchAgentをアンロード（無効化）
-launchctl unload ~/Library/LaunchAgents/com.user.keyremapping.plist
-
-# LaunchAgentをロード（有効化）
-launchctl load ~/Library/LaunchAgents/com.user.keyremapping.plist
-
-# 現在のキーマッピングを確認
-hidutil property --get "UserKeyMapping"
-```
+bootstrap実行時に自動的にシンボリックリンクが作成される。設定を変更した場合、Karabiner-Elementsが自動的に再読み込みする。
 
 ### raycast/raycast.rayconfig
 Raycastのエクスポートした設定ファイル（パスワード保護）。
@@ -209,9 +203,9 @@ bootstrap.shは以下のmacOSシステム設定を自動構成します：
 - **キーリピート速度**: 最速（KeyRepeat = 1）
 - **キーリピート開始遅延**: 短め（InitialKeyRepeat = 15）
 - **ファンクションキー**: F1-F12を標準のファンクションキーとして動作（特殊機能はFnキー併用）
-- **キーリマッピング**（LaunchAgent経由）:
+- **キーリマッピング**（Karabiner-Elements経由）:
   - Caps Lock → Control
-  - Left Control → Escape
+  - Control → Escape（単独押し時のみ）
 
 ### Keyboard Shortcuts
 - **Spotlight**: 無効化（Cmd+Space, Cmd+Option+Space）- Raycast使用のため
