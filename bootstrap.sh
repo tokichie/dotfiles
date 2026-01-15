@@ -211,7 +211,26 @@ initialize_mise() {
 }
 
 ################################################################################
-# Phase 6: Set Zsh as Default Shell
+# Phase 6: Install Google Cloud SDK
+################################################################################
+
+install_google_cloud_sdk() {
+    log_info "Installing Google Cloud SDK..."
+
+    if [ -d "$HOME/google-cloud-sdk" ]; then
+        log_success "Google Cloud SDK already installed"
+        return 0
+    fi
+
+    log_info "Downloading and installing Google Cloud SDK (this may take a few minutes)..."
+    curl https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir="$HOME"
+
+    log_success "Google Cloud SDK installed"
+    log_warning "Please restart your terminal to enable gcloud command"
+}
+
+################################################################################
+# Phase 7: Set Zsh as Default Shell
 ################################################################################
 
 set_default_shell() {
@@ -260,7 +279,7 @@ set_default_shell() {
 }
 
 ################################################################################
-# Phase 7: Configure macOS Defaults
+# Phase 8: Configure macOS Defaults
 ################################################################################
 
 configure_macos() {
@@ -313,6 +332,7 @@ main() {
     create_symlinks
     initialize_sheldon
     initialize_mise
+    install_google_cloud_sdk
 
     # Set default shell (may require sudo, handle failure gracefully)
     set +e

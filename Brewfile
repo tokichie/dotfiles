@@ -35,11 +35,9 @@ brew "imagemagick"
 # Cloud/Infrastructure
 brew "terraform"
 brew "tflint"
-brew "tenv"
 brew "azure-cli"
 brew "cloudflared"
 brew "supabase/tap/supabase"
-brew "google-cloud-sdk"
 brew "kubectl"
 brew "cue-lang/tap/cue"
 
