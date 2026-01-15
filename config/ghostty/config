@@ -7,7 +7,7 @@ adjust-cell-height = 10%
 font-family = "FiraCode Nerd Font"
 
 # テーマ（明るいCatppuccin Latteを採用）
-theme = catppuccin-latte
+theme = Catppuccin Latte
 
 # --- ウィンドウ・透明度 ---
 # 背景を透過させてブラー（すりガラス効果）を入れる

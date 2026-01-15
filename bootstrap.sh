@@ -200,10 +200,10 @@ install_ghostty_themes() {
     log_info "Downloading Catppuccin themes for Ghostty..."
 
     # Download Catppuccin themes
-    if curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-latte -o "$themes_dir/catppuccin-latte" && \
-       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-frappe -o "$themes_dir/catppuccin-frappe" && \
-       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-macchiato -o "$themes_dir/catppuccin-macchiato" && \
-       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-mocha -o "$themes_dir/catppuccin-mocha"; then
+    if curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-latte.conf -o "$themes_dir/catppuccin-latte.conf" && \
+       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-frappe.conf -o "$themes_dir/catppuccin-frappe.conf" && \
+       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-macchiato.conf -o "$themes_dir/catppuccin-macchiato.conf" && \
+       curl -fsSL https://raw.githubusercontent.com/catppuccin/ghostty/main/themes/catppuccin-mocha.conf -o "$themes_dir/catppuccin-mocha.conf"; then
         log_success "Ghostty themes installed"
     else
         log_warning "Failed to download some themes. You may need to install manually:"
