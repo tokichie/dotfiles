@@ -17,6 +17,7 @@ brew "tree"
 brew "direnv"
 brew "neovim"
 brew "tmux"
+brew "displayplacer"
 
 # Version managers
 brew "mise"

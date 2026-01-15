@@ -282,8 +282,52 @@ set_default_shell() {
 # Phase 8: Configure macOS Defaults
 ################################################################################
 
+set_max_scaled_resolution() {
+    log_info "Setting display to maximum scaled resolution..."
+
+    if ! command -v displayplacer &> /dev/null; then
+        log_warning "displayplacer not found, skipping display configuration"
+        return 0
+    fi
+
+    # Get display list output
+    local display_info=$(displayplacer list)
+
+    # Get first display ID
+    local display_id=$(echo "$display_info" | grep "Persistent screen id" | head -1 | awk '{print $4}')
+
+    # Extract first display's info only (from first "Persistent screen id" to second one, or to end)
+    local first_display_info=$(echo "$display_info" | awk 'BEGIN {count=0} /^Persistent screen id:/ {count++; if (count==2) exit} count==1 {print}')
+
+    # Get max resolution with scaling:on for first display only
+    # Parse resolution lines with scaling:on, extract resolution, sort by width*height
+    local max_res=$(echo "$first_display_info" | \
+        grep "scaling:on" | \
+        grep -o "res:[0-9]*x[0-9]*" | \
+        sed 's/res://' | \
+        awk -F'x' '{print $1*$2, $0}' | \
+        sort -rn | \
+        head -1 | \
+        awk '{print $2}')
+
+    if [ -z "$max_res" ]; then
+        log_warning "Could not determine maximum scaled resolution"
+        return 0
+    fi
+
+    log_info "Setting display to ${max_res} (scaled)"
+
+    # Apply the resolution
+    displayplacer "id:${display_id} res:${max_res} hz:60 color_depth:8 enabled:true scaling:on origin:(0,0) degree:0"
+
+    log_success "Display resolution configured to ${max_res}"
+}
+
 configure_macos() {
     log_info "Configuring macOS system preferences..."
+
+    # Display resolution
+    set_max_scaled_resolution
 
     # Keyboard settings
     log_info "Setting keyboard repeat rate..."
