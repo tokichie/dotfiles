@@ -50,6 +50,7 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 |----------|------|-------------|
 | Version Manager | [mise](https://mise.jdx.dev/) | Rust製の統合バージョンマネージャー（rbenv/goenv/pyenv/nを統合） |
 | Plugin Manager | [sheldon](https://sheldon.cli.rs/) | Rust製のzshプラグインマネージャー（zplugの代替） |
+| VCS | [Jujutsu (jj)](https://github.com/martinvonz/jj) | 次世代VCS、Gitと互換性あり（主要なバージョン管理ツール） |
 | Git TUI | [lazygit](https://github.com/jesseduffield/lazygit) | Go製のGit TUI（tigの代替） |
 | Prompt | [pure](https://github.com/sindresorhus/pure) | ミニマルなzshプロンプト |
 | Package Manager | [Homebrew](https://brew.sh/) | macOSパッケージマネージャー |
@@ -183,6 +184,47 @@ vim ~/.config/mise/config.toml
 # Install new version
 mise install
 ```
+
+## Version Control Workflow
+
+**重要: このリポジトリはJujutsu (jj)で管理されています。**
+
+Jujutsuは次世代のバージョン管理システムで、Gitと完全に互換性があります。このプロジェクトでは、すべてのコミットとプッシュ操作にjjを使用してください。
+
+### 基本的なワークフロー
+
+```bash
+# 変更を確認
+jj status
+
+# コミット（変更の説明を設定）
+jj describe -m "コミットメッセージ"
+
+# mainブックマークを現在のコミットに移動
+jj bookmark set main
+
+# リモートにプッシュ
+jj git push
+
+# または一括実行
+jj bookmark set main && jj git push
+```
+
+### jjの特徴
+
+- **自動コミット**: 作業ディレクトリの変更は自動的に追跡される
+- **ブックマーク**: Gitのブランチに相当（`main`ブックマークを使用）
+- **変更IDベース**: コミットハッシュではなく変更IDで管理
+- **Git互換**: `jj git push/pull`でGitリポジトリと同期
+
+### Claude Codeへの指示
+
+**dotfilesリポジトリでの作業時は、必ずjjを使用してください:**
+1. ファイルを編集した後、`jj describe`でコミットメッセージを設定
+2. `jj bookmark set main`でmainブックマークを更新
+3. `jj git push`でリモートにプッシュ
+
+**gitコマンドは使用しないでください。** すべてのバージョン管理操作はjjで行います。
 
 ## File Naming Convention
 
