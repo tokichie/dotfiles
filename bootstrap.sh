@@ -349,9 +349,24 @@ configure_macos() {
     log_success "Keyboard settings configured"
 
     # Trackpad settings
-    log_info "Setting trackpad scroll direction..."
+    log_info "Configuring trackpad settings..."
+
+    # Scroll direction (disable natural scrolling)
     defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
-    log_success "Trackpad settings configured"
+
+    # Tracking speed
+    defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
+
+    # Tap to click (built-in trackpad)
+    defaults write com.apple.AppleMultitouchTrackpad Clicking -int 1
+
+    # Tap to click (Bluetooth trackpad)
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 1
+
+    # Enable tap to click for login screen
+    defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+    log_success "Trackpad settings configured (restart required for some settings)"
 
     # Dock settings
     log_info "Configuring Dock..."
@@ -366,7 +381,7 @@ configure_macos() {
     killall SystemUIServer
     log_success "Screenshot settings configured"
 
-    log_warning "Some settings require logging out and back in to take full effect"
+    log_warning "Trackpad and keyboard settings require logging out and back in to take full effect"
 }
 
 ################################################################################
