@@ -8,6 +8,7 @@ Modern dotfiles configuration for macOS development environment.
 - **Modern stack**: mise (version manager), sheldon (plugin manager), lazygit (Git TUI)
 - **Declarative**: Brewfile for package management
 - **Customizable**: Pure prompt with version display in project directories
+- **macOS defaults**: Automatically configures keyboard, trackpad, dock, and display settings
 
 ## Technology Stack
 
@@ -68,6 +69,14 @@ exec zsh
 - **AI**: ChatGPT
 - **Utilities**: Karabiner Elements
 
+### macOS System Settings
+- **Display**: Maximum scaled resolution
+- **Keyboard**: Fastest key repeat, function keys as standard F1-F12
+- **Keyboard Remapping**: Caps Lock → Control, Left Control → Escape (via LaunchAgent)
+- **Trackpad**: Traditional scroll direction (natural scrolling disabled)
+- **Dock**: 45px tile size
+- **Screenshots**: Saved to `~/Pictures/ScreenShots/`
+
 ## Post-Installation
 
 ### Verify Installation
@@ -116,6 +125,8 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 ├── Brewfile                  # Homebrew dependencies
 ├── _zshrc                    # Zsh configuration
 ├── _gitconfig                # Git configuration
+├── LaunchAgents/
+│   └── com.user.keyremapping.plist  # Keyboard remapping
 └── config/
     ├── sheldon/
     │   └── plugins.toml      # Zsh plugins
@@ -161,6 +172,27 @@ mise install
 ### Customize Prompt
 
 Edit `_zshrc` to modify the `pure_prompt_version_info()` function.
+
+### Customize Keyboard Remapping
+
+Edit `LaunchAgents/com.user.keyremapping.plist` to change key mappings. After editing:
+
+```bash
+# Reload the LaunchAgent
+launchctl unload ~/Library/LaunchAgents/com.user.keyremapping.plist
+launchctl load ~/Library/LaunchAgents/com.user.keyremapping.plist
+
+# Verify current mappings
+hidutil property --get "UserKeyMapping"
+```
+
+Common key codes for `hidutil`:
+- Caps Lock: `0x700000039`
+- Left Control: `0x7000000E0`
+- Right Control: `0x7000000E4`
+- Escape: `0x700000029`
+- Left Command: `0x7000000E3`
+- Right Command: `0x7000000E7`
 
 ## Updating
 

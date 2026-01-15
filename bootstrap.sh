@@ -330,9 +330,15 @@ configure_macos() {
     set_max_scaled_resolution
 
     # Keyboard settings
-    log_info "Setting keyboard repeat rate..."
+    log_info "Configuring keyboard settings..."
+
+    # Key repeat rate (fastest)
     defaults write NSGlobalDomain KeyRepeat -int 1
     defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+    # Use F1, F2, etc. as standard function keys (not special features)
+    defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+
     log_success "Keyboard settings configured"
 
     # Trackpad settings
@@ -354,6 +360,40 @@ configure_macos() {
     log_success "Screenshot settings configured"
 
     log_warning "Some settings require logging out and back in to take full effect"
+}
+
+################################################################################
+# Phase 9: Install LaunchAgents
+################################################################################
+
+install_launchagents() {
+    log_info "Installing LaunchAgents for keyboard remapping..."
+
+    local launchagents_dir="$HOME/Library/LaunchAgents"
+    mkdir -p "$launchagents_dir"
+
+    # Install key remapping LaunchAgent
+    local plist_source="$(pwd)/LaunchAgents/com.user.keyremapping.plist"
+    local plist_target="$launchagents_dir/com.user.keyremapping.plist"
+
+    if [ ! -f "$plist_source" ]; then
+        log_warning "LaunchAgent file not found at $plist_source, skipping"
+        return 0
+    fi
+
+    # Copy (not symlink) the plist file
+    cp "$plist_source" "$plist_target"
+    log_success "Installed key remapping LaunchAgent"
+
+    # Load the LaunchAgent
+    log_info "Loading key remapping service..."
+    launchctl unload "$plist_target" 2>/dev/null || true
+    launchctl load "$plist_target"
+    log_success "Key remapping service loaded"
+
+    log_info "Key mappings:"
+    log_info "  - Caps Lock → Control"
+    log_info "  - Left Control → Escape"
 }
 
 ################################################################################
@@ -385,6 +425,9 @@ main() {
 
     # Configure macOS defaults
     configure_macos
+
+    # Install LaunchAgents
+    install_launchagents
 
     echo ""
     echo "========================================="

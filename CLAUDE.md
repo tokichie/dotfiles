@@ -26,7 +26,10 @@ cd ~/.dotfiles
 3. dotfilesのシンボリックリンクを作成（`_*` → `~/.*`、`config/*` → `~/.config/*`）
 4. sheldonプラグインをインストール
 5. miseでバージョン管理ツールをインストール（Node/Python/Ruby/Go）
-6. zshをデフォルトシェルに設定
+6. Google Cloud SDKをインストール
+7. zshをデフォルトシェルに設定
+8. macOSシステム設定を構成（ディスプレイ、キーボード、トラックパッド、Dock、スクリーンショット）
+9. キーボードリマッピング用LaunchAgentをインストール
 
 **重要**:
 - ワンライナーで実行する場合、git/Xcode Command Line Toolsが必要です
@@ -65,6 +68,8 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 ├── _gitconfig                # Git設定
 ├── README.md                 # ドキュメント
 ├── CLAUDE.md                 # このファイル
+├── LaunchAgents/
+│   └── com.user.keyremapping.plist  # キーボードリマッピング設定
 └── config/
     ├── sheldon/
     │   └── plugins.toml      # zshプラグイン定義
@@ -152,6 +157,49 @@ lazygitの設定:
 - ghqのルートディレクトリ: `~/ghq`
 - カスタムエイリアス: `delete-merged-branches` (マージ済みブランチの削除)
 - 自動prune: `fetch.prune = true`
+
+### LaunchAgents/com.user.keyremapping.plist
+システム起動時に自動実行されるキーボードリマッピング設定。`hidutil`を使用して以下のキーを入れ替え:
+- **Caps Lock → Control**: Caps Lockキーを押すとControlキーとして動作
+- **Left Control → Escape**: 左Controlキーを押すとEscapeキーとして動作
+
+LaunchAgentは`~/Library/LaunchAgents/`にコピーされ、`launchctl`で自動ロードされます。
+
+#### 手動でのキーリマッピング管理
+```bash
+# LaunchAgentをアンロード（無効化）
+launchctl unload ~/Library/LaunchAgents/com.user.keyremapping.plist
+
+# LaunchAgentをロード（有効化）
+launchctl load ~/Library/LaunchAgents/com.user.keyremapping.plist
+
+# 現在のキーマッピングを確認
+hidutil property --get "UserKeyMapping"
+```
+
+## macOS System Settings
+
+bootstrap.shは以下のmacOSシステム設定を自動構成します：
+
+### Display
+- 最大スケール解像度に設定（displayplacerを使用）
+
+### Keyboard
+- **キーリピート速度**: 最速（KeyRepeat = 1）
+- **キーリピート開始遅延**: 短め（InitialKeyRepeat = 15）
+- **ファンクションキー**: F1-F12を標準のファンクションキーとして動作（特殊機能はFnキー併用）
+- **キーリマッピング**（LaunchAgent経由）:
+  - Caps Lock → Control
+  - Left Control → Escape
+
+### Trackpad
+- **スクロール方向**: ナチュラルスクロールを無効化（従来のスクロール方向）
+
+### Dock
+- **タイルサイズ**: 45ピクセル
+
+### Screenshots
+- **保存先**: `~/Pictures/ScreenShots/`
 
 ## Common Tasks
 
