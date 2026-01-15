@@ -279,7 +279,7 @@ configure_macos() {
 
     # Dock settings
     log_info "Configuring Dock..."
-    defaults write com.apple.dock tilesize -int 64
+    defaults write com.apple.dock tilesize -int 45
     killall Dock
     log_success "Dock settings configured"
 
