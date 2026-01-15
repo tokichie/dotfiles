@@ -1,0 +1,43 @@
+# Lazygit configuration
+# Location: ~/.config/lazygit/config.yml
+
+gui:
+  theme:
+    selectedLineBgColor:
+      - reverse
+    selectedRangeBgColor:
+      - reverse
+  showFileTree: true
+  showCommandLog: false
+  nerdFontsVersion: "3"
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  commit:
+    signOff: false
+  merging:
+    manualCommit: false
+  skipHookPrefix: WIP
+  autoFetch: true
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --"
+
+os:
+  editPreset: "nvim"
+
+customCommands:
+  - key: "C"
+    command: "git commit --amend --no-edit"
+    context: "files"
+    description: "Amend commit without editing message"
+
+  - key: "P"
+    command: "git push -u origin {{.SelectedLocalBranch.Name}}"
+    context: "localBranches"
+    description: "Push current branch and set upstream"
+
+keybinding:
+  universal:
+    quit: 'q'
+    return: '<esc>'

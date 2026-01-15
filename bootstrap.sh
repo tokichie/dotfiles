@@ -1,0 +1,228 @@
+#!/bin/bash
+#
+# bootstrap.sh - Modern dotfiles setup script
+# Sets up a complete development environment on macOS
+#
+
+set -euo pipefail
+
+# Colors for output
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[1;33m'
+readonly BLUE='\033[0;34m'
+readonly NC='\033[0m' # No Color
+
+# Get dotfiles directory
+readonly DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+################################################################################
+# Logging functions
+################################################################################
+
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+################################################################################
+# Phase 1: Homebrew Installation
+################################################################################
+
+install_homebrew() {
+    log_info "Checking for Homebrew..."
+
+    if command -v brew &> /dev/null; then
+        log_success "Homebrew already installed"
+        return 0
+    fi
+
+    log_info "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Setup Homebrew in PATH
+    if [[ $(uname -m) == 'arm64' ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+
+    log_success "Homebrew installed"
+}
+
+################################################################################
+# Phase 2: Install Dependencies via Brewfile
+################################################################################
+
+install_dependencies() {
+    log_info "Installing dependencies via Brewfile..."
+
+    if [ ! -f "$DOTFILES_DIR/Brewfile" ]; then
+        log_error "Brewfile not found at $DOTFILES_DIR/Brewfile"
+        exit 1
+    fi
+
+    brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock
+
+    log_success "Dependencies installed"
+}
+
+################################################################################
+# Phase 3: Create Symlinks
+################################################################################
+
+create_symlinks() {
+    log_info "Creating symlinks..."
+
+    # Symlink dotfiles (_filename -> ~/.filename)
+    for file in "$DOTFILES_DIR"/_*; do
+        [ -f "$file" ] || continue
+
+        local basename=$(basename "$file" | sed 's/^_/./')
+        local target="$HOME/$basename"
+
+        if [ -L "$target" ]; then
+            log_info "Symlink already exists: $basename"
+        elif [ -e "$target" ]; then
+            log_warning "Backing up existing $basename to ${basename}.backup"
+            mv "$target" "${target}.backup"
+            ln -s "$file" "$target"
+            log_success "Created symlink: $basename"
+        else
+            ln -s "$file" "$target"
+            log_success "Created symlink: $basename"
+        fi
+    done
+
+    # Symlink config directories
+    mkdir -p "$HOME/.config"
+
+    for dir in "$DOTFILES_DIR/config"/*; do
+        [ -d "$dir" ] || continue
+
+        local dirname=$(basename "$dir")
+        local target="$HOME/.config/$dirname"
+
+        if [ -L "$target" ]; then
+            log_info "Config symlink already exists: $dirname"
+        elif [ -e "$target" ]; then
+            log_warning "Backing up existing config/$dirname to ${target}.backup"
+            mv "$target" "${target}.backup"
+            ln -s "$dir" "$target"
+            log_success "Created config symlink: $dirname"
+        else
+            ln -s "$dir" "$target"
+            log_success "Created config symlink: $dirname"
+        fi
+    done
+}
+
+################################################################################
+# Phase 4: Initialize Sheldon
+################################################################################
+
+initialize_sheldon() {
+    log_info "Initializing sheldon plugins..."
+
+    if ! command -v sheldon &> /dev/null; then
+        log_error "sheldon not found. Please ensure Homebrew installation completed."
+        exit 1
+    fi
+
+    log_info "Downloading and installing zsh plugins (this may take a while)..."
+    sheldon lock --update
+
+    log_success "Sheldon plugins installed"
+}
+
+################################################################################
+# Phase 5: Initialize mise
+################################################################################
+
+initialize_mise() {
+    log_info "Installing tools via mise..."
+
+    if ! command -v mise &> /dev/null; then
+        log_error "mise not found. Please ensure Homebrew installation completed."
+        exit 1
+    fi
+
+    # mise reads from ~/.config/mise/config.toml (symlinked)
+    log_info "Installing Node.js, Python, Ruby, Go (this may take several minutes)..."
+    mise install
+    mise reshim
+
+    log_success "mise tools installed"
+}
+
+################################################################################
+# Phase 6: Set Zsh as Default Shell
+################################################################################
+
+set_default_shell() {
+    local zsh_path
+    zsh_path=$(command -v zsh)
+
+    if [ "$SHELL" = "$zsh_path" ]; then
+        log_success "Zsh is already the default shell"
+        return 0
+    fi
+
+    log_info "Setting zsh as default shell..."
+
+    # Add zsh to allowed shells if not present
+    if ! grep -q "$zsh_path" /etc/shells; then
+        log_info "Adding $zsh_path to /etc/shells (requires sudo)"
+        echo "$zsh_path" | sudo tee -a /etc/shells > /dev/null
+    fi
+
+    chsh -s "$zsh_path"
+
+    log_success "Default shell changed to zsh"
+    log_warning "Please restart your terminal for changes to take effect"
+}
+
+################################################################################
+# Main
+################################################################################
+
+main() {
+    echo ""
+    echo "========================================="
+    echo "  Dotfiles Bootstrap"
+    echo "========================================="
+    echo ""
+
+    install_homebrew
+    install_dependencies
+    create_symlinks
+    initialize_sheldon
+    initialize_mise
+    set_default_shell
+
+    echo ""
+    echo "========================================="
+    log_success "Bootstrap completed successfully!"
+    echo "========================================="
+    echo ""
+    echo "Next steps:"
+    echo "  1. Restart your terminal (or run 'exec zsh')"
+    echo "  2. Verify installation with: mise doctor"
+    echo "  3. (Optional) Clean up old version managers:"
+    echo "     rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n"
+    echo ""
+}
+
+# Run main function
+main "$@"

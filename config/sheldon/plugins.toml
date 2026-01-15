@@ -1,0 +1,31 @@
+# Sheldon plugin configuration
+# Location: ~/.config/sheldon/plugins.toml
+
+shell = "zsh"
+
+# Syntax highlighting (must load early)
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+# History substring search
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+
+# Autosuggestions
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+# Enhanced cd
+[plugins.enhancd]
+github = "b4b4r07/enhancd"
+
+# Pure prompt
+[plugins.pure]
+github = "sindresorhus/pure"
+use = ["*.zsh"]
+apply = ["fpath"]
+
+# Completions
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+apply = ["fpath"]

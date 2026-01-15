@@ -1,0 +1,17 @@
+# Global mise configuration
+# Location: ~/.config/mise/config.toml
+
+[tools]
+# Node.js - Always use latest LTS
+node = "lts"
+
+# Python
+python = "3.12"
+
+# Ruby
+ruby = "3.3"
+
+# Go
+go = "1.23"
+
+# Project-specific overrides go in project root's .mise.toml

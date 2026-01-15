@@ -1,0 +1,11 @@
+[ghq]
+	root = ~/ghq
+[user]
+	email = 3077613+tokichie@users.noreply.github.com
+	name = tokichie
+[core]
+	excludesfile = /Users/yuta.tokitake/.config/git/ignore
+[alias]
+	delete-merged-branches = !git branch --merged | grep -v \\\\* | xargs -I % git branch -d %
+[fetch]
+	prune = true
