@@ -73,6 +73,8 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 │   ├── README.md             # Raycastインポート手順
 │   └── raycast.rayconfig     # Raycast設定（パスワード保護）
 └── config/
+    ├── ghostty/
+    │   └── config            # Ghosttyターミナル設定
     ├── karabiner/
     │   └── karabiner.json    # キーボードリマッピング設定
     ├── sheldon/
@@ -179,6 +181,26 @@ bootstrap実行時に自動的にシンボリックリンクが作成される�
 **キーリマッピングについて:**
 - **Caps Lock → Control**: システム設定のModifier Keysで手動設定（Post-Installation参照）
 - キーリマッピングはKarabiner-Elementsではなく、システム設定で管理することを推奨
+
+### config/ghostty/config
+Ghosttyターミナルエミュレータの設定ファイル。`~/.config/ghostty/`にシンボリックリンクされる。
+
+**設定内容:**
+- **テーマ**: catppuccin-latte（明るいテーマ）
+- **フォント**: FiraCode Nerd Font、サイズ14、行間10%広げる
+- **透明度**: 背景透過90%、ブラー効果20
+- **ウィンドウ**: 余白10px、透明タイトルバー
+- **操作性**: Option as Alt、選択時自動コピー、クリップボード許可
+- **macOS統合**: ネイティブシャドウ、入力中カーソル非表示
+
+**画面分割キーバインド:**
+- `Cmd+Enter`: 下に分割
+- `Cmd+Shift+Enter`: 右に分割
+- `Cmd+矢印キー`: ペイン間移動
+- `Cmd+Shift+矢印キー`: ペインサイズ調整（20px単位）
+- `Cmd+W`: 現在のペインを閉じる
+
+bootstrap実行時に自動的にシンボリックリンクが作成される。設定を変更した場合、Ghosttyの再起動で反映される。
 
 ### raycast/raycast.rayconfig
 Raycastのエクスポートした設定ファイル（パスワード保護）。

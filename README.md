@@ -161,6 +161,8 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 │   ├── README.md             # Raycast import instructions
 │   └── raycast.rayconfig     # Raycast settings (password-protected)
 └── config/
+    ├── ghostty/
+    │   └── config            # Ghostty terminal settings
     ├── karabiner/
     │   └── karabiner.json    # Keyboard remapping
     ├── sheldon/
