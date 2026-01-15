@@ -71,14 +71,16 @@ exec zsh
 - **Containers**: OrbStack
 - **Utilities**: Karabiner Elements
 
-### macOS System Settings
+### macOS System Settings (Automated)
 - **Display**: Maximum scaled resolution
 - **Keyboard**: Fastest key repeat, function keys as standard F1-F12
-- **Keyboard Remapping**: Caps Lock → Control, Control → Escape (via Karabiner-Elements)
 - **Keyboard Shortcuts**: Spotlight disabled, Desktop switching (Ctrl+1-5), unused Mission Control shortcuts disabled
 - **Trackpad**: Traditional scroll direction, tracking speed 3, tap to click enabled
 - **Dock**: 45px tile size
 - **Screenshots**: Saved to `~/Pictures/ScreenShots/`
+
+### Manual Configuration Required
+- **Modifier Keys**: Caps Lock → Control (see Post-Installation section)
 
 ## Post-Installation
 
@@ -109,6 +111,18 @@ Navigate to a project directory with `.mise.toml` or `go.mod`:
 ```bash
 cd ~/ghq/github.com/example/project
 # Node/Go versions should appear in left prompt
+```
+
+### Configure Modifier Keys
+
+Set up Caps Lock → Control in System Settings:
+
+```bash
+# 1. Open System Settings
+# 2. Go to Keyboard → Keyboard Shortcuts → Modifier Keys
+# 3. Select your keyboard from the dropdown
+# 4. Change "Caps Lock" to "Control"
+# 5. Click "Done"
 ```
 
 ### Import Raycast Configuration

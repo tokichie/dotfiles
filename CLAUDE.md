@@ -30,7 +30,7 @@ cd ~/.dotfiles
 7. zshをデフォルトシェルに設定
 8. macOSシステム設定を構成（ディスプレイ、キーボード、トラックパッド、Dock、スクリーンショット）
 
-**注**: キーボードリマッピング（Caps Lock → Control, Control → Escape）はKarabiner-Elementsで管理され、`config/karabiner/`のシンボリックリンクで自動適用されます。
+**注**: キーボードリマッピング（Caps Lock → Control）はシステム設定のModifier Keysで手動設定が必要です（README.md参照）。
 
 **重要**:
 - ワンライナーで実行する場合、git/Xcode Command Line Toolsが必要です
@@ -163,16 +163,16 @@ lazygitの設定:
 - 自動prune: `fetch.prune = true`
 
 ### config/karabiner/karabiner.json
-Karabiner-Elementsのキーボードリマッピング設定。`~/.config/karabiner/`にシンボリックリンクされる。
+Karabiner-Elementsの設定ファイル。`~/.config/karabiner/`にシンボリックリンクされる。
 
 **設定内容:**
-- **Caps Lock → Control**: simple_modificationsで設定
-- **Control → Escape（単独押し時）**: complex_modificationsで設定
-  - Controlキーを他のキーと組み合わせた場合は通常のControl
-  - 単独で押してすぐ離した場合はEscape
 - **Command → 英数/かな**: 左Commandは英数、右Commandはかな（単独押し時）
 
 bootstrap実行時に自動的にシンボリックリンクが作成される。設定を変更した場合、Karabiner-Elementsが自動的に再読み込みする。
+
+**キーリマッピングについて:**
+- **Caps Lock → Control**: システム設定のModifier Keysで手動設定（Post-Installation参照）
+- キーリマッピングはKarabiner-Elementsではなく、システム設定で管理することを推奨
 
 ### raycast/raycast.rayconfig
 Raycastのエクスポートした設定ファイル（パスワード保護）。
@@ -203,9 +203,8 @@ bootstrap.shは以下のmacOSシステム設定を自動構成します：
 - **キーリピート速度**: 最速（KeyRepeat = 1）
 - **キーリピート開始遅延**: 短め（InitialKeyRepeat = 15）
 - **ファンクションキー**: F1-F12を標準のファンクションキーとして動作（特殊機能はFnキー併用）
-- **キーリマッピング**（Karabiner-Elements経由）:
-  - Caps Lock → Control
-  - Control → Escape（単独押し時のみ）
+
+**注**: キーリマッピング（Caps Lock → Control）はシステム設定のModifier Keysで手動設定（README.md参照）
 
 ### Keyboard Shortcuts
 - **Spotlight**: 無効化（Cmd+Space, Cmd+Option+Space）- Raycast使用のため
