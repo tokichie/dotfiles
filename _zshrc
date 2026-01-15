@@ -180,6 +180,9 @@ bindkey "^X^E" edit-command-line
 ## Additional PATH configurations
 ################################################################################
 
+# Local binaries (for claude-code, etc.)
+export PATH="$HOME/.local/bin:$PATH"
+
 # OpenJDK
 export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 

@@ -339,6 +339,7 @@ cdコマンドを使う場合は、事前に `source ~/.zshrc` を実行する�
 
 ### 環境変数とPATH
 _zshrcは以下の環境を設定します:
+- `~/.local/bin` (claude-code等のローカルバイナリ)
 - Homebrew (`/opt/homebrew`)
 - mise（バージョンマネージャー）
 - pnpm
