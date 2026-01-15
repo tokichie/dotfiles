@@ -2,7 +2,6 @@
 
 # Taps
 tap "supabase/tap"
-tap "epk/epk"
 
 # Core tools
 brew "zsh"
@@ -62,6 +61,8 @@ cask "cursor"
 cask "todoist"
 cask "chatgpt"
 cask "notion"
+cask "antigravity"
+
 
 # Fonts
-cask "font-sf-mono-nerd-font"
+cask "font-fira-code-nerd-font"

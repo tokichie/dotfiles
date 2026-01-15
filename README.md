@@ -196,9 +196,9 @@ source ~/.zshrc
 
 ```bash
 # Check if Nerd Font is installed
-brew install --cask font-sf-mono-nerd-font
+brew install --cask font-fira-code-nerd-font
 
-# Set terminal font to "SF Mono Nerd Font"
+# Set terminal font to "FiraCode Nerd Font"
 ```
 
 ## License
