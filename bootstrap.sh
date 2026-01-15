@@ -54,6 +54,13 @@ setup_dotfiles_repo() {
     if [ -d "$DOTFILES_TARGET" ]; then
         log_info "Dotfiles directory already exists at $DOTFILES_TARGET"
         cd "$DOTFILES_TARGET"
+
+        # Update to latest version if it's a git repository
+        if [ -d ".git" ]; then
+            log_info "Updating dotfiles to latest version..."
+            git pull origin main 2>/dev/null || log_warning "Failed to update dotfiles (continuing with existing version)"
+        fi
+
         return 0
     fi
 
