@@ -80,7 +80,7 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 - CLI ツール: zsh, git, gh, ghq, fzf, jq, yq, direnv, neovim, tmux, etc.
 - 開発ツール: mise, sheldon, lazygit, jj, git-delta
 - メディア: ffmpeg, imagemagick
-- クラウド/インフラ: terraform, tflint, azure-cli, gcloud, kubectl, supabase
+- クラウド/インフラ: terraform, tflint, tenv, azure-cli, cloudflared, supabase, gcloud, kubectl, cue
 - データベース: pgcli, libpq
 - GUI アプリ: VS Code, Cursor, Ghostty, Raycast, Obsidian, Bitwarden, etc.
 

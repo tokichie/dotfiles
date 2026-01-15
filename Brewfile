@@ -2,6 +2,7 @@
 
 # Taps
 tap "supabase/tap"
+tap "cue-lang/tap"
 
 # Core tools
 brew "zsh"
@@ -40,6 +41,7 @@ brew "cloudflared"
 brew "supabase/tap/supabase"
 brew "google-cloud-sdk"
 brew "kubectl"
+brew "cue-lang/tap/cue"
 
 # Database
 brew "pgcli"

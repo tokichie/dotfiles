@@ -48,7 +48,7 @@ exec zsh
 - **Version Managers**: mise (replaces rbenv/goenv/pyenv/n)
 - **Git**: lazygit, jj (Jujutsu), git-delta
 - **Media**: ffmpeg, imagemagick
-- **Cloud/Infra**: terraform, tflint, tenv, azure-cli, cloudflared, supabase, gcloud, kubectl
+- **Cloud/Infra**: terraform, tflint, tenv, azure-cli, cloudflared, supabase, gcloud, kubectl, cue
 - **Database**: pgcli, libpq
 - **API**: buf, grpcurl
 
