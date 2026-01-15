@@ -74,6 +74,13 @@ function convert-to-gif() {
     ffmpeg -i $1 -vf scale=1200:-1:flags=lanczos -r 20 $GIF_FILE
 }
 
+function ghq-cd() {
+    local repo=$(ghq list --full-path | fzf --preview "ls -la {}")
+    if [ -n "$repo" ]; then
+        cd "$repo"
+    fi
+}
+
 ################################################################################
 ## Aliases
 ################################################################################
@@ -90,6 +97,9 @@ alias cm='git commit'
 
 alias -g B='$(git-current-branch-name)'
 alias pb='git push -u origin B'
+
+# ghq
+alias g='ghq-cd'
 
 # Git TUI (lazygit instead of tig)
 alias lg='lazygit'
