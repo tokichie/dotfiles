@@ -55,6 +55,7 @@ brew "grpcurl"
 # GUI Apps (Casks)
 cask "karabiner-elements"
 cask "google-japanese-ime"
+cask "orbstack"
 cask "raycast"
 cask "obsidian"
 cask "dbeaver-community"

@@ -68,6 +68,7 @@ exec zsh
 - **Database**: DBeaver Community
 - **AI**: ChatGPT
 - **Input Method**: Google Japanese IME
+- **Containers**: OrbStack
 - **Utilities**: Karabiner Elements
 
 ### macOS System Settings

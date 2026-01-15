@@ -98,7 +98,7 @@ rm -rf ~/.rbenv ~/.goenv ~/.pyenv ~/.n
 - メディア: ffmpeg, imagemagick
 - クラウド/インフラ: terraform, tflint, tenv, azure-cli, cloudflared, supabase, gcloud, kubectl, cue
 - データベース: pgcli, libpq
-- GUI アプリ: VS Code, Cursor, Ghostty, Raycast, Obsidian, Bitwarden, Google Japanese IME, etc.
+- GUI アプリ: VS Code, Cursor, Ghostty, Raycast, Obsidian, Bitwarden, Google Japanese IME, OrbStack, etc.
 
 ### _zshrc
 zshの設定ファイル。以下の機能を含む:
