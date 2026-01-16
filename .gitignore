@@ -1,2 +1,5 @@
 # Karabiner-Elements automatic backups
 config/karabiner/automatic_backups/
+
+# Ghostty themes (downloaded by bootstrap.sh)
+config/ghostty/themes/
