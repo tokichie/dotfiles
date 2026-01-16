@@ -540,21 +540,35 @@ configure_macos() {
 tell application "System Events"
     -- Open Mission Control
     do shell script "open -a 'Mission Control'"
-    delay 1.5
+    delay 2.0
 
-    -- Click the add desktop button 4 times (creates 5 total desktops)
     tell process "Dock"
+        -- Wait for Mission Control to be ready
+        repeat 10 times
+            if exists button 1 of group 1 then
+                exit repeat
+            end if
+            delay 0.2
+        end repeat
+
+        -- Click the add desktop button 4 times (creates 5 total desktops)
         repeat 4 times
             try
-                click button 1 of group 1 of group 1
-                delay 0.5
-            on error
+                -- Try multiple possible UI element paths
+                if exists button 1 of group 1 then
+                    click button 1 of group 1
+                    delay 0.8
+                else
+                    exit repeat
+                end if
+            on error errMsg
                 -- If button not found, stop trying
                 exit repeat
             end try
         end repeat
     end tell
 
+    delay 0.5
     -- Close Mission Control
     key code 53 -- ESC
 end tell
