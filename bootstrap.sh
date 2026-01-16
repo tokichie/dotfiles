@@ -505,7 +505,23 @@ configure_macos() {
       </dict>
     "
 
-    # Disable unused Mission Control shortcuts
+    # Mission Control: Cmd+Shift+Space (keycode 49)
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 32 "
+      <dict>
+        <key>enabled</key><true/>
+        <key>value</key><dict>
+          <key>type</key><string>standard</string>
+          <key>parameters</key>
+          <array>
+            <integer>32</integer>
+            <integer>49</integer>
+            <integer>1179648</integer>
+          </array>
+        </dict>
+      </dict>
+    "
+
+    # Disable unused Mission Control shortcuts (excluding 32 which is now enabled)
     for id in 15 16 17 18 19 20 21 22 23 24 25 26 34; do
         defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add $id "<dict><key>enabled</key><false/></dict>"
     done
@@ -599,15 +615,25 @@ EOF
     # Dock settings
     log_info "Configuring Dock..."
     defaults write com.apple.dock tilesize -int 45
-    killall Dock
     log_success "Dock settings configured"
+
+    # Mission Control settings
+    log_info "Configuring Mission Control..."
+    defaults write com.apple.dock mru-spaces -bool false
+    killall Dock
+    log_success "Mission Control settings configured"
+
+    # Clock settings
+    log_info "Configuring menu bar clock..."
+    defaults write com.apple.menuextra.clock ShowSeconds -bool true
+    log_success "Clock settings configured (will take effect after SystemUIServer restart)"
 
     # Screenshot settings
     log_info "Configuring screenshot location..."
     mkdir -p "$HOME/Pictures/ScreenShots"
     defaults write com.apple.screencapture location "$HOME/Pictures/ScreenShots"
     killall SystemUIServer
-    log_success "Screenshot settings configured"
+    log_success "Screenshot and clock settings applied"
 
     log_warning "Trackpad, keyboard, and keyboard shortcut settings require logging out and back in to take full effect"
 }
