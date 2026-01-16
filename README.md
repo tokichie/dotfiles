@@ -79,6 +79,7 @@ exec zsh
 - **Display**: Maximum scaled resolution
 - **Keyboard**: Fastest key repeat, function keys as standard F1-F12
 - **Keyboard Shortcuts**: Spotlight disabled, Desktop switching (Ctrl+1-5), unused Mission Control shortcuts disabled
+- **Virtual Desktops**: Automatically creates 5 desktops via Mission Control
 - **Trackpad**: Traditional scroll direction, tracking speed 3, tap to click enabled
 - **Dock**: 45px tile size
 - **Screenshots**: Saved to `~/Pictures/ScreenShots/`

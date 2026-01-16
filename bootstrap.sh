@@ -532,6 +532,36 @@ configure_macos() {
 
     log_success "Trackpad settings configured (restart required for some settings)"
 
+    # Mission Control - Create 5 Virtual Desktops
+    log_info "Setting up 5 Virtual Desktops..."
+
+    # AppleScript to create desktops via Mission Control
+    osascript <<'EOF' 2>/dev/null || log_warning "Failed to create virtual desktops automatically. Please create them manually via Mission Control."
+tell application "System Events"
+    -- Open Mission Control
+    do shell script "open -a 'Mission Control'"
+    delay 1.5
+
+    -- Click the add desktop button 4 times (creates 5 total desktops)
+    tell process "Dock"
+        repeat 4 times
+            try
+                click button 1 of group 1 of group 1
+                delay 0.5
+            on error
+                -- If button not found, stop trying
+                exit repeat
+            end try
+        end repeat
+    end tell
+
+    -- Close Mission Control
+    key code 53 -- ESC
+end tell
+EOF
+
+    log_success "Virtual Desktops configured (verify with Mission Control)"
+
     # Dock settings
     log_info "Configuring Dock..."
     defaults write com.apple.dock tilesize -int 45
