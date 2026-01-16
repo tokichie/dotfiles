@@ -545,27 +545,47 @@ tell application "System Events"
     tell process "Dock"
         -- Wait for Mission Control to be ready
         repeat 10 times
-            if exists button 1 of group 1 then
-                exit repeat
-            end if
+            try
+                if exists group 1 then
+                    exit repeat
+                end if
+            end try
             delay 0.2
         end repeat
 
-        -- Click the add desktop button 4 times (creates 5 total desktops)
-        repeat 4 times
-            try
-                -- Try multiple possible UI element paths
-                if exists button 1 of group 1 then
-                    click button 1 of group 1
-                    delay 0.8
-                else
-                    exit repeat
-                end if
-            on error errMsg
-                -- If button not found, stop trying
-                exit repeat
-            end try
-        end repeat
+        -- Count existing desktops and add only what's needed to reach 5
+        -- Correct hierarchy: group 1 -> element 1 (group) -> element 2 (Spaces Bar)
+        --   Spaces Bar contains: element 1 (list of desktops), element 2 (add button)
+        try
+            set mainGroup to group 1
+            set nestedContainer to item 1 of (UI elements of mainGroup)
+            set spacesBar to item 2 of (UI elements of nestedContainer)
+
+            -- Count existing desktops from the list
+            set desktopList to item 1 of (UI elements of spacesBar)
+            set currentCount to count of (UI elements of desktopList)
+
+            -- Calculate how many to add (target: 5 desktops)
+            set targetCount to 5
+            set toAdd to targetCount - currentCount
+
+            if toAdd > 0 then
+                -- Get the add desktop button
+                set addButton to item 2 of (UI elements of spacesBar)
+
+                -- Add the required number of desktops
+                repeat toAdd times
+                    if class of addButton is button then
+                        click addButton
+                        delay 0.8
+                    else
+                        exit repeat
+                    end if
+                end repeat
+            end if
+        on error
+            -- If counting fails, skip desktop creation
+        end try
     end tell
 
     delay 0.5
