@@ -1,6 +1,6 @@
 # --- 見た目・フォント ---
 # フォントサイズ（お好みで調整してください）
-font-size = 14
+font-size = 12
 # 行間を少し広げてモダンにする（10%〜20%くらいが人気）
 adjust-cell-height = 10%
 # フォントファミリー（BrewfileでインストールされたFiraCode Nerd Fontを使用）
